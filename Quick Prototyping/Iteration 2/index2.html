@@ -1,0 +1,80 @@
+<!-- Code from d3-graph-gallery.com -->
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<title>Total Covid Cases</title>
+
+<!-- Load d3.js -->
+<script src="https://d3js.org/d3.v4.js"></script>
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+<script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
+<body>
+
+<script>
+
+var w = 500
+var h = 400
+
+// The svg
+//Create SVG element
+      var svg = d3.select("body")
+            .append("svg")
+            .attr("width", w)
+            .attr("height", h);
+
+var data = d3.map();
+
+// Load external data and boot
+d3.queue()
+  .defer(d3.json, "https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson")
+  .defer(d3.csv, "/Covid_Cases.csv", function(d) { data.set(d.ISO_Code, +d.Total_Cases); })
+  .await(ready);
+
+// Map and projection
+var path = d3.geoPath();
+var projection = d3.geoMercator()
+  .scale(70)
+  .center([0,20])
+  .translate([w / 2, h / 2]);
+
+// Data and color scale
+
+var colorScale = d3.scaleThreshold()
+  .domain([100000, 1000000, 10000000, 30000000, 100000000, 500000000])
+  .range(d3.schemeReds[9]);
+
+
+
+function ready(error, topo) {
+  //console.log(data.entries())
+  console.log(data)
+  console.log(d3.min(data.entries(), function(d){ return d.value}))
+  console.log(d3.max(data.entries(), function(d){ return d.value}))
+  
+  /*
+  var colorScale = d3.scaleLinear()
+                     .domain([d3.min(data.entries(), function(d){ return d.value}),
+                              d3.max(data.entries(), function(d){ return d.value})])
+                     .range([0, 255]);*/
+
+
+  // Draw the map
+  svg.append("g")
+    .selectAll("path")
+    .data(topo.features)
+    .enter()
+    .append("path")
+      // draw each country
+      .attr("d", d3.geoPath()
+        .projection(projection)
+      )
+      // set the color of each country
+      .attr("fill", function (d) {
+        d.total = data.get(d.id) || 0;
+        return colorScale(d.total);
+        //return "rgb(" + colorScale(d.total) + "255,255)"
+      });
+    }
+
+</script>
+  </body>

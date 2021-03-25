@@ -1,0 +1,216 @@
+Name,ISO_Code,Total_Cases
+Afghanistan,AFG,12937238.0
+Africa,OWID_AFR,586057065.0
+Albania,ALB,10966480.0
+Algeria,DZA,19419483.0
+Andorra,AND,1501686.0
+Angola,AGO,2961298.0
+Anguilla,AIA,
+Antigua and Barbuda,ATG,61660.0
+Argentina,ARG,308381690.0
+Armenia,ARM,28271613.0
+Asia,OWID_ASI,3995482734.0
+Australia,AUS,7429676.0
+Austria,AUT,57162103.0
+Azerbaijan,AZE,31728262.0
+Bahamas,BHS,1447671.0
+Bahrain,BHR,21968705.0
+Bangladesh,BGD,112513613.0
+Barbados,BRB,214815.0
+Belarus,BLR,41455361.0
+Belgium,BEL,113194681.0
+Belize,BLZ,1542359.0
+Benin,BEN,843563.0
+Bermuda,BMU,
+Bhutan,BTN,122011.0
+Bolivia,BOL,40681064.0
+Bosnia and Herzegovina,BIH,18337438.0
+Botswana,BWA,2944436.0
+Brazil,BRA,1677498337.0
+Brunei,BRN,56028.0
+Bulgaria,BGR,30204059.0
+Burkina Faso,BFA,1355428.0
+Burundi,BDI,241036.0
+Cambodia,KHM,119367.0
+Cameroon,CMR,6858000.0
+Canada,CAN,113185435.0
+Cape Verde,CPV,2384619.0
+Cayman Islands,CYM,
+Central African Republic,CAF,1359746.0
+Chad,TCD,561015.0
+Chile,CHL,154201016.0
+China,CHN,36540991.0
+Colombia,COL,325555196.0
+Comoros,COM,320782.0
+Congo,COG,1567575.0
+Costa Rica,CRI,30372745.0
+Cote d'Ivoire,CIV,6156725.0
+Croatia,HRV,28994939.0
+Cuba,CUB,4148486.0
+Cyprus,CYP,3642849.0
+Czechia,CZE,128737528.0
+Democratic Republic of Congo,COD,4143240.0
+Denmark,DNK,25678485.0
+Djibouti,DJI,1689839.0
+Dominica,DMA,19471.0
+Dominican Republic,DOM,38911168.0
+Ecuador,ECU,49425305.0
+Egypt,EGY,34847431.0
+El Salvador,SLV,9938101.0
+Equatorial Guinea,GNQ,1408049.0
+Eritrea,ERI,277802.0
+Estonia,EST,5773240.0
+Eswatini,SWZ,2167416.0
+Ethiopia,ETH,24827167.0
+Europe,OWID_EUR,4290790033.0
+European Union,OWID_EUN,2760153480.0
+Faeroe Islands,FRO,
+Falkland Islands,FLK,
+Fiji,FJI,12315.0
+Finland,FIN,7329531.0
+France,FRA,488979655.0
+Gabon,GAB,2738913.0
+Gambia,GMB,859237.0
+Georgia,GEO,30327282.0
+Germany,DEU,301839751.0
+Ghana,GHA,14522764.0
+Gibraltar,GIB,
+Greece,GRC,22150846.0
+Greenland,GRL,
+Grenada,GRD,19994.0
+Guatemala,GTM,29784020.0
+Guernsey,GGY,
+Guinea,GIN,3387897.0
+Guinea-Bissau,GNB,721571.0
+Guyana,GUY,1190865.0
+Haiti,HTI,2641419.0
+Honduras,HND,26939352.0
+Hong Kong,HKG,
+Hungary,HUN,48267189.0
+Iceland,ISL,1294030.0
+India,IND,1966885326.0
+Indonesia,IDN,153569653.0
+International,OWID_INT,288728.0
+Iran,IRN,239613314.0
+Iraq,IRQ,118139709.0
+Ireland,IRL,26235264.0
+Isle of Man,IMN,
+Israel,ISR,96349509.0
+Italy,ITA,370251064.0
+Jamaica,JAM,2772806.0
+Japan,JPN,49785533.0
+Jersey,JEY,
+Jordan,JOR,43864235.0
+Kazakhstan,KAZ,45455870.0
+Kenya,KEN,17312514.0
+Kosovo,OWID_KOS,9087190.0
+Kuwait,KWT,35251617.0
+Kyrgyzstan,KGZ,16252722.0
+Laos,LAO,10068.0
+Latvia,LVA,7383467.0
+Lebanon,LBN,37165793.0
+Lesotho,LSO,974819.0
+Liberia,LBR,434419.0
+Libya,LBY,17691266.0
+Liechtenstein,LIE,306646.0
+Lithuania,LTU,19857944.0
+Luxembourg,LUX,7679527.0
+Macao,MAC,
+Madagascar,MDG,4295125.0
+Malawi,MWI,2925799.0
+Malaysia,MYS,25607118.0
+Maldives,MDV,3199997.0
+Mali,MLI,1404536.0
+Malta,MLT,2520508.0
+Marshall Islands,MHL,532.0
+Mauritania,MRT,2854683.0
+Mauritius,MUS,154842.0
+Mexico,MEX,302650903.0
+Micronesia (country),FSM,61.0
+Moldova,MDA,26235971.0
+Monaco,MCO,200394.0
+Mongolia,MNG,292339.0
+Montenegro,MNE,8474083.0
+Montserrat,MSR,
+Morocco,MAR,70045072.0
+Mozambique,MOZ,5265743.0
+Myanmar,MMR,18008283.0
+Namibia,NAM,4646958.0
+Nepal,NPL,43198729.0
+Netherlands,NLD,134542801.0
+New Zealand,NZL,659755.0
+Nicaragua,NIC,1460378.0
+Niger,NER,694154.0
+Nigeria,NGA,22218331.0
+North America,OWID_NAM,4494112038.0
+North Macedonia,MKD,13724386.0
+Northern Cyprus,OWID_CYN,
+Norway,NOR,9827851.0
+Oceania,OWID_OCE,8287313.0
+Oman,OMN,30194684.0
+Pakistan,PAK,111849431.0
+Palestine,PSE,22674510.0
+Panama,PAN,48719696.0
+Papua New Guinea,PNG,182041.0
+Paraguay,PRY,19903523.0
+Peru,PER,242685282.0
+Philippines,PHL,97937108.0
+Poland,POL,199694581.0
+Portugal,PRT,85281366.0
+Qatar,QAT,39214138.0
+Romania,ROU,103201382.0
+Russia,RUS,610187679.0
+Rwanda,RWA,2109922.0
+Saint Helena,SHN,
+Saint Kitts and Nevis,KNA,8072.0
+Saint Lucia,LCA,194717.0
+Saint Vincent and the Grenadines,VCT,103601.0
+Samoa,WSM,277.0
+San Marino,SMR,514376.0
+Sao Tome and Principe,STP,315509.0
+Saudi Arabia,SAU,94979925.0
+Senegal,SEN,5174699.0
+Serbia,SRB,50400642.0
+Seychelles,SYC,176450.0
+Sierra Leone,SLE,733288.0
+Singapore,SGP,17325628.0
+Slovakia,SVK,30163394.0
+Slovenia,SVN,19552637.0
+Solomon Islands,SLB,2490.0
+Somalia,SOM,1310696.0
+South Africa,ZAF,238325963.0
+South America,OWID_SAM,2848516586.0
+South Korea,KOR,12688184.0
+South Sudan,SSD,1036940.0
+Spain,ESP,413234254.0
+Sri Lanka,LKA,7793027.0
+Sudan,SDN,5361435.0
+Suriname,SUR,1430511.0
+Sweden,SWE,78600451.0
+Switzerland,CHE,71978591.0
+Syria,SYR,2017360.0
+Taiwan,TWN,219478.0
+Tajikistan,TJK,3083298.0
+Tanzania,TZA,170469.0
+Thailand,THA,2623995.0
+Timor,TLS,15384.0
+Togo,TGO,855452.0
+Trinidad and Tobago,TTO,1309150.0
+Tunisia,TUN,24623902.0
+Turkey,TUR,319482027.0
+Turks and Caicos Islands,TCA,
+Uganda,UGA,5162054.0
+Ukraine,UKR,173440767.0
+United Arab Emirates,ARE,49101848.0
+United Kingdom,GBR,482696372.0
+United States,USA,3877666022.0
+Uruguay,URY,4631721.0
+Uzbekistan,UZB,16093631.0
+Vanuatu,VUT,163.0
+Vatican,VAT,6616.0
+Venezuela,VEN,22932077.0
+Vietnam,VNM,384921.0
+World,OWID_WRL,16223534488.0
+Yemen,YEM,569242.0
+Zambia,ZMB,7308239.0
+Zimbabwe,ZWE,3908763.0
