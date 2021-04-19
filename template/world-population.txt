@@ -1,9 +1,0 @@
-id	name	population
-CHN	China	"""1330141295"""
-IND	India	"""1173108018"""
-USA	United States	"""310232863"""
-IDN	Indonesia	"""242968342"""
-BRA	Brazil	"""201103330"""
-PAK	Pakistan	"""177276594"""
-BGD	Bangladesh	"""158065841"""
-NGA	Nigeria	"""152217341"""
