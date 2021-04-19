@@ -33,7 +33,7 @@ var x = d3.scaleLinear()
 
 var color = d3.scaleThreshold()
     .domain(d3.range(0, 27388, 27388/9))
-    .range(d3.schemeBlues[9]);
+    .range(d3.schemeReds[9]);
 
 var g = svg.append("g")
     .attr("class", "key")
