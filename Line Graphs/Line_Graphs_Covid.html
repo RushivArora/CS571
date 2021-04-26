@@ -96,6 +96,8 @@ queue()
 .await(ready);
 
 console.log(startDate)
+var check = 0;
+var globalStart = new Date("2021-04-14");
 
 //Read the data
 function ready(error, data){
@@ -336,12 +338,17 @@ function ready(error, data){
   var label = slider.append("text")  
                     .attr("class", "label")
                     .attr("text-anchor", "middle")
-                    .text(formatTime(startDate))
+                    .text(formatTime(globalStart))
                     .attr("transform", "translate(0," + (-25) + ")")
 
   var handle = slider.insert("circle", ".track-overlay")
                      .attr("class", "handle")
                      .attr("r", 9)
+
+  if(check == 0){
+    update(globalStart);
+    check = 1;
+  }
 
 
   function update(h) {
@@ -448,7 +455,7 @@ function ready(error, data){
                 .enter()
                 .append("circle")
                 .transition()
-                .duration(3000)
+                .duration(2000)
                 .attr("cx",20)
                 .attr("cy",function(d,i){
                   return 30 + i*15;
