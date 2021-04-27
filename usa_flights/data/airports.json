@@ -1,0 +1,90 @@
+{
+"type": "FeatureCollection",
+"features": [
+  {
+      "long": -122.154993181,
+      "lat": 30.5413693793,
+      "name": "Los Angeles International"
+  },
+  {
+      "long": -126.133935076,
+      "lat": 34.2211875472,
+      "name": "San Francisco International"
+  },
+  {
+    "long": -106.45,
+    "lat": 37.4643468206413,
+    "name": "Denver International"
+  },
+  {
+    "long": -78.2887147460152,
+    "lat": 19.957243107604,
+    "name": "Miami International"
+  },
+  {
+    "long": -82.4279188822754,
+    "lat": 30.4410758198944,
+    "name": "Hartsfield-Jackson Atlanta International"
+  },
+  {
+    "long": -108.75,
+    "lat": 22.457243107604,
+    "name": "Daniel K. Inouye International"
+  },
+  {
+    "long": -86.7105952039514,
+    "lat": 39.9804600429329,
+    "name": "Chicago OHare Internationa"
+  },
+  {
+    "long": -67.0102909977065,
+    "lat": 39.8636330376787,
+    "name": "Boston Logan International"
+  },
+  {
+    "long": -81.3537314720423,
+    "lat": 40.2129725988552,
+    "name": "Detroit Metropolitan Wayne County"
+  },
+  {
+    "long": -78.1478114283204,
+    "lat": 31.4136892261228,
+    "name": "Charlotte Douglas International"
+  },
+  {
+    "long": -70.9751246689879,
+    "lat": 37.8915033838306,
+    "name": "Newark Liberty International"
+  },
+  {
+    "long": -118.04888081287,
+    "lat": 33.082853976328,
+    "name": "McCarran International"
+  },
+  {
+    "long": -70.2732455278797,
+    "lat": 38.4738834966785,
+    "name": "LaGuardia"
+  },
+  {
+    "long": -70.0732455278797,
+    "lat": 38.0738834966785,
+    "name": "John F. Kennedy International"
+  },
+  {
+    "long": -97.0394983968728,
+    "lat": 29.3940590356408,
+    "name": "Dallas/Fort Worth International"
+  },
+  {
+    "long": -73.4427728838621,
+    "lat": 35.9475939204352,
+    "name": "Washington Dulles International"
+  },
+  {
+    "long": -126.554993181,
+    "lat": 46.6505828917119,
+    "name": "Seattle-Tacoma International"
+  }
+]
+}
