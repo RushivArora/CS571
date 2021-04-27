@@ -28,7 +28,6 @@ var color = d3.scaleThreshold()
 var formatDateIntoYear = d3.timeFormat("%Y");
 var formatDate = d3.timeFormat("%b %Y");
 var formatTime = d3.timeFormat("%B %d, %Y");
-var path = d3.geoPath();
 
 zoomed = ()=>{
   const {x,y,k} = d3.event.transform

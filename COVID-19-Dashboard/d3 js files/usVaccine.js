@@ -1,6 +1,6 @@
-function weatherUSA(){
+function usvaccine(){
 
-  var svg = d3.selectAll('#latestCasesNode').attr('width',document.getElementById('latestCaseDiv').offsetWidth);
+  var svg = d3.selectAll('#usvacNode').attr('width',document.getElementById('usvacDiv').offsetWidth);
         //Using this selection to update the SVG everytime the function is called
         svg.selectAll("*").remove();
 
@@ -19,87 +19,93 @@ var tip = d3.tip()
 })
 
 var margin = {top: 150, right: 0, bottom: 0, left: 10},
-width = document.getElementById('latestCaseDiv').offsetWidth - margin.left - margin.right,
-height = document.getElementById('latestCaseDiv').offsetHeight + margin.top - margin.bottom;
+width = document.getElementById('usvacDiv').offsetWidth - margin.left - margin.right,
+height = document.getElementById('usvacDiv').offsetHeight + margin.top - margin.bottom;
 
 var color = d3.scaleThreshold()
-.domain(d3.range(0.0, 1.5, 1.5/5))
-.range(d3.schemeReds[5]);
+    //.domain(d3.range(0, 1, 1/9))
+    .domain([0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8])
+    .range(d3.schemeBlues[9]);
 
-var formatDateIntoYear = d3.timeFormat("%Y");
-var formatDate = d3.timeFormat("%b %Y");
-var formatTime = d3.timeFormat("%B %d, %Y");
-        // var path = d3.geoPath();
+    var path = d3.geoPath();
+    //.projection(projection);
 
-        zoomed = ()=>{
-          const {x,y,k} = d3.event.transform
-          let t = d3.zoomIdentity
-          t =  t.translate(x,y).scale(k).translate(50,50)
-          svg.attr("transform", t)
-        }
-        var zoom = d3.zoom()
-        .scaleExtent([1, 30])
-        .on("zoom", zoomed);
+    var x = d3.scaleLinear()
+    .domain([0, 1])
+    .rangeRound([550, 900]);
 
-        var svg = d3.select("#latestCasesNode")
-        .attr("width", width)
-        .attr("height", height)
-        .call(zoom)
-        .append('g')
-        .attr('class', 'map')
-        .append("g").attr('transform','translate(50,50)');
-
-    // var path = d3.geoPath();
-
-    svg.call(tip);
+    var formatDateIntoYear = d3.timeFormat("%Y");
+    var formatDate = d3.timeFormat("%b %Y");
+    var formatTime = d3.timeFormat("%B %d, %Y");
 
     var parseTime = d3.timeParse("%Y-%m-%d");
-    var globalStart = new Date("2019-01-23");
+    var globalStart = new Date("2021-01-16");
 
-    // var projection = d3.geoAlbersUsa()
-    // // .scale(0.03939*width + 0.104166*height+20)
-    // .translate( [width/2, height / 2])
-    // .scale(1000);
+    var g = svg.append("g")
+    .attr("class", "key")
+    .attr("transform", "translate(0,40)");
 
-    var path = d3.geoPath()//.projection(projection);
+    g.selectAll("rect")
+    .data(color.range().map(function(d) {
+      d = color.invertExtent(d);
+      if (d[0] == null) d[0] = x.domain()[0];
+      if (d[1] == null) d[1] = x.domain()[1];
+      return d;
+    }))
+    .enter().append("rect")
+    .attr("height", 8)
+    .attr("x", function(d) { return x(d[0]); })
+    .attr("width", function(d) { return x(d[1]) - x(d[0]); })
+    .attr("fill", function(d) { return color(d[0]); });
 
+    g.append("text")
+    .attr("class", "caption")
+    .attr("x", x.range()[0])
+    .attr("y", -6)
+    .attr("fill", "#000")
+    .attr("text-anchor", "start")
+    .attr("font-weight", "bold")
+    .text("Percent Adults Vaccinated");
 
-    queue()
-    .defer(d3.json, 'https://d3js.org/us-10m.v1.json')
-    .defer(d3.csv, '../weather_usa.csv')
+    g.call(d3.axisBottom(x)
+      .tickSize(13)
+      .tickFormat(function(x, i) { return i ? Math.floor(x) : x ; })
+      .tickValues(color.domain()))
+    .select(".domain")
+    .remove();
+
+    d3.queue()
+    .defer(d3.json, "https://d3js.org/us-10m.v1.json")
+    .defer(d3.csv, "../vaccines.csv") //, function(d) { cases.set(d.id, +d.rate); })
     .await(ready);
 
-    function ready(error, usa, weather) {
+    function ready(error, usa, vaccines) {
+      if (error) throw error;
+      const vaccinesById = {};
+      const allDates = {};
 
-  // console.log(covid_map)
-  // console.log(usa)
+      vaccines.forEach(d => {
+    //console.log(formatTime(parseTime(d.date)))
+    if(formatTime(parseTime(d.date)) == formatTime(globalStart)){
+      vaccinesById[d.id] = +d.rate;}
+    });
 
-  // var states = topojson.feature(usa, usa.objects.states).features;
-  // // console.log(states);
-  // svg.selectAll(".state")
-  // .data(states)
-  // .enter().append(path)
-  // .attr("class", "state")
-  // .attr("d", path);
+      topojson.feature(usa, usa.objects.counties).features.forEach(d => { d.rate = vaccinesById[d.id] });
 
-  const weatherById = {};
-  const allDates = {};
-  weather.forEach(d => {weatherById[d.id] = +d[globalStart.toISOString().slice(0,10)]});
+      var vaccinesByIdList = d3.entries(vaccinesById);
 
-  topojson.feature(usa, usa.objects.counties).features.forEach(d => { d[globalStart.toISOString().slice(0,10)] = weatherById[d.id] });
-
-  var weatherByIdList = d3.entries(weatherById);
-  svg.append("g")
-  .attr("class", "counties")
-  .selectAll("path")
-  .data(topojson.feature(usa, usa.objects.counties).features)
-  .enter().append("path")
-  .attr("d", path)
-  .attr("fill", function(d) { return color(d[globalStart.toISOString().slice(0,10)] = weatherById[d.id]);
-  })
-  .style('stroke', 'white')
-  .style('stroke-width', 0.5)
-  .style("opacity",1)
+      svg.append("g")
+      .attr("class", "counties")
+      .selectAll("path")
+      .data(topojson.feature(usa, usa.objects.counties).features)
+      .enter().append("path")
+      .attr("d", path)
+      .style("fill", function(d) { 
+        return color(d.rate = vaccinesById[d.id]);
+      })
+      .style('stroke', 'white')
+      .style('stroke-width', 0.5)
+      .style("opacity",1)
         // tooltips
         .style("stroke","white")
         .style('stroke-width', 0.3)
@@ -138,14 +144,14 @@ var formatTime = d3.timeFormat("%B %d, %Y");
         });
 
         svg.append("path")
-        .datum(topojson.mesh(usa, usa.objects.states, function(a, b) { return a.id !== b.id; }))
+        .datum(topojson.mesh(usa, usa.objects.states, function(a, b) { return a !== b; }))
         .attr("class", "states")
         .attr("d", path);
 
     //All the work on the slider:
 
-    var startDate = new Date("2019-01-23"),
-    endDate = new Date("2020-04-30");
+    var startDate = new Date("2021-01-16"),
+    endDate = new Date("2021-03-31");
 
     var margin2 = {top:0, right:50, bottom:50, left:50},
     width2 = width - margin2.left - margin2.right,
@@ -203,10 +209,13 @@ var formatTime = d3.timeFormat("%B %d, %Y");
       .attr("x", x(h))
       .text(formatTime(h));
 
-      weather.forEach(d => {weatherById[d.id] = +d[globalStart.toISOString().slice(0,10)];});
+      vaccines.forEach(d => {
+        if(formatTime(parseTime(d.date)) == formatTime(globalStart)){
+          vaccinesById[d.id] = +d.rate;}
+        });
 
       svg.selectAll("path")
-      .style('fill', d => color(weatherById[d.id]))
+      .style('fill', d => color(vaccinesById[d.id]))
     }
 
 
