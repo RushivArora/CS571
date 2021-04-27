@@ -15,40 +15,40 @@
     </div> -->
 
     <div class="sticky-top">
-            
-            <!-- Navbar -->
-            <nav class="navbar navbar-expand-md navbar-light bg-light justify-content-center">
-                
-                <a class="navbar-brand d-flex w-50 mr-auto" href="#home">Covid-19 Dashboard</a>
 
-                <!-- This button replaces the links list when in mobile. -->
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-md navbar-light bg-light justify-content-center">
 
-                <!-- Navbar links -->
-                <div class="collapse navbar-collapse" id="nav">
-                    <ul class="nav navbar-nav ml-auto justify-content-end">
-                        <li class="nav-item">
-                            <a class="nav-link" href="javascript:heatMap1(); javascript:vaccineWorld()" onclick="document.getElementById('flightDiv').style.display= 'none'">World</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="javascript:usaMap();" onclick="document.getElementById('latestCaseDiv').style.display= 'none'">US</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="javascript:weatherWorld();javascript:weatherUSA();"
-                            onclick="document.getElementById('flightDiv').style.display= 'none'"
-                            >Weather</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="javascript:flightData();"
-                            onclick="document.getElementById('latestCaseDiv').style.display= 'none';document.getElementById('nodeDiv').style.display='none'">Flights</a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
+            <a class="navbar-brand d-flex w-50 mr-auto" href="javascript:heatMap1(); javascript:vaccineWorld(); javascript:lineChart(); " onclick="worldFn()">Covid-19 Dashboard</a>
 
-        </div>
+            <!-- This button replaces the links list when in mobile. -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Navbar links -->
+            <div class="collapse navbar-collapse" id="nav">
+                <ul class="nav navbar-nav ml-auto justify-content-end">
+                    <li class="nav-item">
+                        <a class="nav-link" href="javascript:heatMap1(); javascript:vaccineWorld(); javascript:lineChart(); " onclick="worldFn()">World</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="javascript:usaMap(); javascript:usvaccine()" onclick="usaFn()">US</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="javascript:weatherWorld();javascript:weatherUSA();"
+                        onclick="weatherFn()"
+                        >Weather</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="javascript:flightData();"
+                        onclick="flightFn()">Flights</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+    </div>
 
     <div class = 'container-fluid' style = 'width:100%; height:91%' id = "DashboardContainer">
         <div class = "row no-gutters" style = "width:100%;height:100%; max-width:100%; padding-top:0.5%; flex-wrap: wrap" id="DashRow">
@@ -73,7 +73,7 @@
             <div class = "col-md-9" id = "divBox">
                 <!-- World map -->
                 <div class = 'card' style = 'height:75%;width:110%;background : #BADEF7;margin-bottom: 1.5%;' id = 'nodeDiv'>
-                        <svg id = "node" class = 'bravo'></svg>
+                    <svg id = "node" class = 'bravo'></svg>
                 </div>
                 <!-- Latest cases histogram -->
                 <div class = 'card' style = 'height:50%; width:110%; background: #BADEF7' id = 'latestCaseDiv'>
@@ -82,6 +82,14 @@
 
                 <div class = 'card' style = 'height:70%; width:110%; background: #BADEF7' id = 'flightDiv'>
                     <svg height ='100%' width="100%" id = "flightNode" class = 'bravo'></svg>                   
+                </div>
+
+                <div class = 'card' style = 'height:70%; width:110%; background: #BADEF7' id = 'lineGraphDiv'>
+                    <svg height ='100%' width="100%" id = "lineGraphNode" class = 'bravo'></svg>                   
+                </div>
+
+                <div class = 'card' style = 'height:70%; width:110%; background: #BADEF7' id = 'usvacDiv'>
+                    <svg height ='100%' width="100%" id = "usvacNode" class = 'bravo'></svg>                   
                 </div>
 
             </div>
@@ -126,6 +134,8 @@
     <script type="text/javascript" src="d3 js files/usa_covid.js"></script>
     <script type="text/javascript" src="d3 js files/weatherUS.js"></script>
     <script type="text/javascript" src="d3 js files/flights.js"></script>
+    <script type="text/javascript" src="d3 js files/lineGraphs.js"></script>
+    <script type="text/javascript" src="d3 js files/usVaccine.js"></script>
     <!-- <script type="text/javascript" src="d3 js files/LatestCases.js"></script>
     <script type="text/javascript" src="d3 js files/lineGraphDaily.js"></script>
     <script type="text/javascript" src="d3 js files/most_effected.js"></script> -->
@@ -141,6 +151,7 @@
 
         heatMap1();
         vaccineWorld();
+        lineChart();
         // worldRace('all');
         // // top6();
         // // top6_effected();
@@ -175,6 +186,38 @@
             }
         }
 
+        function worldFn() {
+            document.getElementById('flightDiv').style.display= 'none';
+            document.getElementById("nodeDiv").style.display = "block";
+            document.getElementById("latestCaseDiv").style.display = "block";
+            document.getElementById("lineGraphDiv").style.display = "block";
+            document.getElementById("usvacDiv").style.display = "none";
+      }
+
+      function usaFn() {
+            document.getElementById('flightDiv').style.display= 'none';
+            document.getElementById("nodeDiv").style.display = "block";
+            document.getElementById("latestCaseDiv").style.display = "none";
+            document.getElementById("lineGraphDiv").style.display = "none";
+            document.getElementById("usvacDiv").style.display = "block";
+      }
+
+      function weatherFn() {
+            document.getElementById('flightDiv').style.display= 'none';
+            document.getElementById("nodeDiv").style.display = "block";
+            document.getElementById("latestCaseDiv").style.display = "block";
+            document.getElementById("lineGraphDiv").style.display = "none";
+            document.getElementById("usvacDiv").style.display = "none";
+      }
+
+      function flightFn() {
+            document.getElementById('flightDiv').style.display= 'block';
+            document.getElementById("nodeDiv").style.display = "none";
+            document.getElementById("latestCaseDiv").style.display = "none";
+            document.getElementById("lineGraphDiv").style.display = "none";
+            document.getElementById("usvacDiv").style.display = "none";
+      }
+
         //Setting height values 
     </script>
     <!-- <script type="text/javascript" src="dataFetch.js"></script> -->
@@ -184,85 +227,85 @@
           cursor: move;
           fill:#2d3642;
           pointer-events: all;
-        }
-        
-        .bar {
+      }
+
+      .bar {
           fill: steelblue;
-        }
-        
-        .line {
-                fill: none;
-                stroke: steelblue;
-                stroke-width: 1.5px;
-                }
+      }
 
-        .line_recovered {
-                fill: none;
-                stroke: steelblue;
-                stroke-width: 1.5px;
-                }
+      .line {
+        fill: none;
+        stroke: steelblue;
+        stroke-width: 1.5px;
+    }
 
-        .line_active {
-                fill: none;
-                stroke: steelblue;
-                stroke-width: 1.5px;
-                }
+    .line_recovered {
+        fill: none;
+        stroke: steelblue;
+        stroke-width: 1.5px;
+    }
 
-        .line_deaths {
-                fill: none;
-                stroke: steelblue;
-                stroke-width: 1.5px;
-                }
-        .zoom {
-            cursor: move;
-            fill: none;
-            pointer-events: all;
-        }
-        .ticks {
+    .line_active {
+        fill: none;
+        stroke: steelblue;
+        stroke-width: 1.5px;
+    }
+
+    .line_deaths {
+        fill: none;
+        stroke: steelblue;
+        stroke-width: 1.5px;
+    }
+    .zoom {
+        cursor: move;
+        fill: none;
+        pointer-events: all;
+    }
+    .ticks {
       font-size: 10px;
-    }
+  }
 
-    .track,
-    .track-inset,
-    .track-overlay {
+  .track,
+  .track-inset,
+  .track-overlay {
       stroke-linecap: round;
-    }
+  }
 
-    .track {
+  .track {
       stroke: #fff;
       stroke-opacity: 0.3;
       stroke-width: 10px;
-    }
+  }
 
-    .track-inset {
+  .track-inset {
       stroke: #fff;
       stroke-width: 8px;
-    }
+  }
 
-    .track-overlay {
+  .track-overlay {
       pointer-events: stroke;
       stroke-width: 50px;
       stroke: transparent;
       cursor: crosshair;
-    }
+  }
 
-    .handle {
+  .handle {
       fill: #fff;
       stroke: #000;
       stroke-opacity: 0.5;
       stroke-width: 1.25px;
   }
-        html, body {
-            height: 100%;
-        }
-        .fill-height {
-            min-height: 100%;
-            height:auto !important; /* cross-browser */
-            height: 100%; /* cross-browser */
-        }
+  html, body {
+    height: 100%;
+}
+.fill-height {
+    min-height: 100%;
+    height:auto !important; /* cross-browser */
+    height: 100%; /* cross-browser */
+}
 
 
-    </style>
+</style>
 </body>
 
 </html>
