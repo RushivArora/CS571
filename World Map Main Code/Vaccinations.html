@@ -143,14 +143,14 @@
 const tip = d3.tip()
               .attr('class', 'd3-tip')
               .offset([-10, 0])
-              .html(d => `<strong>Country: </strong><span class='details'>${d.properties.name}<br></span><strong>Population: </strong><span class='details'>${format(d.population)}</span>`);
+              .html(d => `<strong>Country: </strong><span class='details'>${d.properties.name}<br></span><strong>Vacinations per 100: </strong><span class='details'>${format(d.totalperhundred)}<br></span><strong>Total Vaccinations: </strong><span class='details'>${format(d.total)}</span>`);
 
 const margin = {top: 0, right: 0, bottom: 0, left: 0};
 const width  = 960 - margin.left - margin.right;
 const height = 600 - margin.top - margin.bottom;
 
 var color = d3.scaleThreshold()
-             .domain([0, 0.5, 8, 16, 24, 32, 40, 48, 56])
+             .domain([0, 0.5, 8, 16, 24, 32, 40, 48, 56, 90])
               .range(d3.schemeBlues[7]);
 
 var formatDateIntoYear = d3.timeFormat("%Y");
@@ -205,17 +205,29 @@ function ready2(error, data, covid_map){
   console.log(covid_map)
 
 
-  const populationById = {};
+  const vaccinationByID = {};
+  const vaccinationByIDPerHundred = {};
   const allDates = {};
+
   covid_map.forEach(d => { 
-    if(formatTime(parseTime(d.date)) == formatTime(globalStart)){
-      populationById[d.iso_code] = +d.total_vaccinations_per_hundred;}
+    var temp = new Date(d.date)
+    if(d.new_vaccinations_smoothed != "" && temp > startDate && temp < globalStart){
+      vaccinationByID[d.iso_code] += parseFloat(d.new_vaccinations_smoothed);
+    }
+
+    if(d.total_vaccinations_per_hundred != "" && temp > startDate && temp < globalStart){
+      vaccinationByIDPerHundred[d.iso_code] = parseFloat(d.total_vaccinations_per_hundred);
+    }
   });
-  data.features.forEach(d => { d.population = populationById[d.id] });
 
-  var populationByIdList = d3.entries(populationById);
+  console.log(vaccinationByID)
+  console.log(vaccinationByIDPerHundred)
 
-  temp  = d3.min(populationByIdList, function(d){ return d.value; });
+  data.features.forEach(d => { d.population = vaccinationByID[d.id] });
+
+  var vaccinationyIdList = d3.entries(vaccinationByID);
+
+  temp  = d3.min(vaccinationyIdList, function(d){ return d.value; });
 
   svg.append('g')
      .attr('class', 'countries')
@@ -223,7 +235,7 @@ function ready2(error, data, covid_map){
      .data(data.features)
      .enter().append('path')
       .attr('d', path)
-      .style('fill', d => color(populationById[d.id]))
+      .style('fill', d => color(vaccinationByID[d.id]))
       .style('stroke', 'white')
       .style('opacity', 0.8)
       .style('stroke-width', 0.3)
@@ -315,18 +327,32 @@ function ready2(error, data, covid_map){
       var code = "Hello"
       covid_map.forEach(d => { 
         if(code != d.iso_code){
-          populationById[d.iso_code] = 0;
+          vaccinationByID[d.iso_code] = 0;
           code = d.iso_code;
+          vaccinationByIDPerHundred[d.iso_code] = "0";
         }
 
-        if(formatTime(parseTime(d.date)) == formatTime(globalStart)){
-            populationById[d.iso_code] = +d.total_vaccinations_per_hundred;
-            code = d.iso_code;
-          }
+        
+
+        var temp = new Date(d.date)
+        if(d.new_vaccinations_smoothed != "" && temp > startDate && temp < globalStart){
+          vaccinationByID[d.iso_code] += parseFloat(d.new_vaccinations_smoothed);
+        }
+
+        if(d.total_vaccinations_per_hundred != "" && temp > startDate && temp < globalStart){
+          vaccinationByIDPerHundred[d.iso_code] = +d.total_vaccinations_per_hundred;
+        }
+
       });
 
+      data.features.forEach(d => { d.totalperhundred = vaccinationByIDPerHundred[d.id];
+                                   d.total = vaccinationByID[d.id];
+           });
+
+      console.log(vaccinationByIDPerHundred)
+
       svg.selectAll("path")
-         .style('fill', d => color(populationById[d.id]))
+         .style('fill', d => color(vaccinationByIDPerHundred[d.id]))
 
   }
 

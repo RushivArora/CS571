@@ -140,10 +140,10 @@
   const format = d3.format(',');
 
 // Set tooltips
-const tip = d3.tip()
+var tip = d3.tip()
               .attr('class', 'd3-tip')
               .offset([-10, 0])
-              .html(d => `<strong>Country: </strong><span class='details'>${d.properties.name}<br></span><strong>Population: </strong><span class='details'>${format(d.population)}</span>`);
+              .html(d => `<strong>Country: </strong><span class='details'>${d.properties.name}<br></span><strong>Total Cases: </strong><span class='details'>${format(d.population)}</span>`);
 
 const margin = {top: 0, right: 0, bottom: 0, left: 0};
 const width  = 960 - margin.left - margin.right;
@@ -209,7 +209,8 @@ function ready2(error, data, covid_map){
   const allDates = {};
   covid_map.forEach(d => { 
     if(formatTime(parseTime(d.date)) == formatTime(globalStart)){
-      populationById[d.iso_code] = +d.total_cases;}
+      populationById[d.iso_code] = +d.total_cases;
+    }
   });
   data.features.forEach(d => { d.population = populationById[d.id] });
 
@@ -324,6 +325,12 @@ function ready2(error, data, covid_map){
             code = d.iso_code;
           }
       });
+
+ 
+
+      data.features.forEach(d => { d.population = populationById[d.id] });
+
+      svg.call(tip);
 
       svg.selectAll("path")
          .style('fill', d => color(populationById[d.id]))
