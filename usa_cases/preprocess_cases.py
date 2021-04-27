@@ -3,7 +3,7 @@ import os
 
 raw_file_path = './data/csse_covid_19_daily_reports'
 
-final_df = pd.DataFrame(columns=['id', 'rate', 'date'])
+final_df = pd.DataFrame(columns=['id', 'rate', 'name', 'date'])
 
 for raw_file in os.listdir(raw_file_path):
 
@@ -24,8 +24,8 @@ for raw_file in os.listdir(raw_file_path):
         continue
 
     tmp_df = tmp_df.rename(columns={'Incidence_Rate': 'rate'})
-    tmp_df = tmp_df.rename(columns={'FIPS': 'id', 'Incident_Rate': 'rate'})
-    tmp_df = tmp_df[['id', 'rate']]
+    tmp_df = tmp_df.rename(columns={'FIPS': 'id', 'Incident_Rate': 'rate', 'Admin2': 'name'})
+    tmp_df = tmp_df[['id', 'rate', 'name']]
 
     tmp_df.id = tmp_df.id.astype(int)
     tmp_df['id'] = tmp_df['id'].apply(lambda x: '0'+str(x) if x <= 9999 else str(x))
