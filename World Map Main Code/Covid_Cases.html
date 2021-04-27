@@ -113,6 +113,17 @@
       stroke-opacity: 0.5;
       stroke-width: 1.25px;
     }
+
+    .brush .extent {
+      stroke: #FFF;
+      shape-rendering: crispEdges;
+    }
+
+    .legend rect {
+      fill:white;
+      stroke:black;
+      opacity:0.8;
+    }
 </style>
 <body>
 <script src="https://d3js.org/d3.v4.min.js"></script>
@@ -129,10 +140,10 @@
   const format = d3.format(',');
 
 // Set tooltips
-const tip = d3.tip()
+var tip = d3.tip()
               .attr('class', 'd3-tip')
               .offset([-10, 0])
-              .html(d => `<strong>Country: </strong><span class='details'>${d.properties.name}<br></span><strong>Population: </strong><span class='details'>${format(d.population)}</span>`);
+              .html(d => `<strong>Country: </strong><span class='details'>${d.properties.name}<br></span><strong>Total Cases: </strong><span class='details'>${format(d.population)}</span>`);
 
 const margin = {top: 0, right: 0, bottom: 0, left: 0};
 const width  = 960 - margin.left - margin.right;
@@ -164,7 +175,7 @@ const path = d3.geoPath().projection(projection);
 svg.call(tip);
 
 var parseTime = d3.timeParse("%Y-%m-%d");
-var globalStart = new Date("2021-03-14");
+var globalStart = new Date("2021-04-14");
 
 //Function for converting CSV values from strings to Dates and numbers
       var rowConverter = function(d) {
@@ -184,6 +195,8 @@ queue()
   .defer(d3.csv, 'owid-covid-data.csv')
   .await(ready2);
 
+var check = 0;
+
 function ready2(error, data, covid_map){
 
   console.log("Covid Data loaded")
@@ -196,7 +209,8 @@ function ready2(error, data, covid_map){
   const allDates = {};
   covid_map.forEach(d => { 
     if(formatTime(parseTime(d.date)) == formatTime(globalStart)){
-      populationById[d.iso_code] = +d.total_cases;}
+      populationById[d.iso_code] = +d.total_cases;
+    }
   });
   data.features.forEach(d => { d.population = populationById[d.id] });
 
@@ -236,8 +250,8 @@ function ready2(error, data, covid_map){
 
   //All the work on the slider:
 
-  var startDate = new Date("2020-02-01"),
-      endDate = new Date("2021-02-14");
+  var startDate = new Date("2020-01-01"),
+      endDate = new Date("2021-04-14");
 
   var margin2 = {top:0, right:50, bottom:50, left:50},
     width2 = width - margin2.left - margin2.right,
@@ -245,12 +259,12 @@ function ready2(error, data, covid_map){
     
   var x = d3.scaleTime()
             .domain([startDate, endDate])
-            .range([margin2.right, width2])
+            .range([0, width2])
             .clamp(true);
 
   var slider = svg.append("g")
                   .attr("class", "slider")
-                  .attr("transform", "translate(" + margin.left + "," + height2 + ")");
+                  .attr("transform", "translate(" + margin2.left + "," + height2 + ")");
 
   slider.append("line")
         .attr("class", "track")
@@ -279,13 +293,17 @@ function ready2(error, data, covid_map){
   var label = slider.append("text")  
                     .attr("class", "label")
                     .attr("text-anchor", "middle")
-                    .text(formatTime(startDate))
+                    .text(formatTime(globalStart))
                     .attr("transform", "translate(0," + (-25) + ")")
 
   var handle = slider.insert("circle", ".track-overlay")
                      .attr("class", "handle")
                      .attr("r", 9)
 
+  if(check == 0){
+    update(globalStart);
+    check = 1;
+  }
 
   function update(h) {
       globalStart = h;
@@ -295,10 +313,24 @@ function ready2(error, data, covid_map){
           .attr("x", x(h))
           .text(formatTime(h));
 
+      var code = "Hello"
       covid_map.forEach(d => { 
+        if(code != d.iso_code){
+          populationById[d.iso_code] = 0;
+          code = d.iso_code;
+        }
+
         if(formatTime(parseTime(d.date)) == formatTime(globalStart)){
-            populationById[d.iso_code] = +d.total_cases;}
+            populationById[d.iso_code] = +d.total_cases;
+            code = d.iso_code;
+          }
       });
+
+ 
+
+      data.features.forEach(d => { d.population = populationById[d.id] });
+
+      svg.call(tip);
 
       svg.selectAll("path")
          .style('fill', d => color(populationById[d.id]))
