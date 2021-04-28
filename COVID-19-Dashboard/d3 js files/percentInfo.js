@@ -1,6 +1,6 @@
 function worldPercent(country){
 
-    d3.tsv('world_population.tsv', function(data_population){
+    d3.tsv('../world_population.tsv', function(data_population){
 
         console.log(data_population)
 
@@ -14,7 +14,7 @@ function worldPercent(country){
                     .attr('width', width)
                     .attr('height', height);
 
-        d3.tsv("world_covid.tsv", function(data) {
+        d3.tsv("../world_covid.tsv", function(data) {
 
             var aggregation = aggregate(data, country);
 

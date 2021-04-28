@@ -26,7 +26,7 @@ function worldRace(country){
         //Using this selection to update the SVG everytime the function is called
     d3.selectAll('#worldRace').selectAll('*').remove()
 
-    d3.csv("../owid-covid-data.csv", function(data) {
+    d3.tsv("../world_covid.tsv", function(data) {
         
         var aggregation = aggregate(data, country)
         console.log(aggregation)
