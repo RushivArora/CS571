@@ -34,7 +34,7 @@ var parseTime = d3.timeParse("%Y-%m-%d");
 var globalStart = new Date("2021-03-14");
 
 queue()
-.defer(d3.csv, 'owid-covid-data.csv')
+.defer(d3.csv, '../owid-covid-data.csv')
 .await(ready);
 
 console.log(startDate)
