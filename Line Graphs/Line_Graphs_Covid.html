@@ -166,7 +166,7 @@ function ready(error, data){
   var res2 = sumstat2.map(function(d){ return d.key })
   var color = d3.scaleOrdinal()
     .domain(res2)
-    .range(['#e41a1c','#377eb8','#4daf4a','#984ea3','#ff7f00','#ffff33','#a65628','#f781bf','#999999'])
+    .range(['#003f5c','#2f4b7c','#665191','#a05195','#d45087','#f95d6a','#ff7c43','#ffa600','#fbe0c4'])
 
   //console.log(sumstat2);
   console.log(datanew)
@@ -212,7 +212,7 @@ function ready(error, data){
                    .attr("fill", "none")
                    .attr("data-legend",function(d) { return d.key})
                    .attr("stroke", function(d){ return color(d.key) })
-                   .attr("stroke-width", 1.5)
+                   .attr("stroke-width", 2.5)
                    .attr("d", function(d){
                       return d3.line()
                         .x(function(d) { return x(new Date(d.date)); })
@@ -226,7 +226,7 @@ function ready(error, data){
 
       // Handmade legend
       var legendCircle = svg.selectAll("circle")
-          .data(sumstat2.reverse())
+          .data(topItems)
           .enter()
           .append("circle")
           .attr("cx",20)
@@ -235,11 +235,11 @@ function ready(error, data){
          })
           .attr("r", 6)
           .style("fill", function(d){
-           return color(d.key); 
+           return color(d[0]); 
          })
 
       var legendText = svg.selectAll("texting")
-        .data(sumstat2)
+        .data(topItems)
         .enter()
         .append("text")
         .attr('class', 'abc')
@@ -248,10 +248,10 @@ function ready(error, data){
          return 30 + i*15;
        })
         .text(function(d){ 
-          if(d.key == "OWID_WRL"){
+          if(d[0] == "OWID_WRL"){
             return "WORLD"
           }
-          return d.key; 
+          return d[0]; 
         })
         .style("font-size", "15px")
         .attr("alignment-baseline","middle")
@@ -447,16 +447,16 @@ function ready(error, data){
                  .key(function(d) { return d.iso_code;})
                  .entries(datanew2);
 
-    legendText.data(sumstat2.reverse())
+    legendText.data(topItems)
               .enter()
                 
 
     d3.selectAll("text.abc")
       .each(function(d, i) {
-            if(d.key == "OWID_WRL"){
-              d.key = "WORLD"
+            if(d[0] == "OWID_WRL"){
+              d[0] = "WORLD"
             }
-            d3.select(this).text(d.key);
+            d3.select(this).text(d[0]);
           })
       .transition()
       .duration(2000)
