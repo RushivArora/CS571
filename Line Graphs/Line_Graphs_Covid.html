@@ -147,7 +147,7 @@ function ready(error, data){
   });
 
   // Step 4.3: Get the top 10 countries
-  var topItems = items.slice(0,3)
+  var topItems = items.slice(0,9)
   console.log(topItems)
 
   // Step 5: Get a group of only the first 10 countries (as listed above)
@@ -242,48 +242,21 @@ function ready(error, data){
         .data(sumstat2)
         .enter()
         .append("text")
+        .attr('class', 'abc')
         .attr("x", 35)
         .attr("y", function(d,i){
          return 30 + i*15;
        })
         .text(function(d){ 
+          if(d.key == "OWID_WRL"){
+            return "WORLD"
+          }
           return d.key; 
         })
         .style("font-size", "15px")
         .attr("alignment-baseline","middle")
 
-
-
-/*
-    var lines = svg.selectAll(".line")
-                    .data(sumstat2)
-                    .enter().append("g")
-                    .attr("class", "lines");
-
-    lines
-      .attr("data-legend",function(d) { return d.key})
-      .attr("stroke", function(d){ return color(d.key) })
-      .attr("stroke-width", 1.5)
-      .attr("d", function(d) { return d3.line()
-                        .x(function(d) { return x(new Date(d.date)); })
-                        .y(function(d) { return y(+d.total_cases); })
-                        (d.values)
-                      })
-
- 
-    lines.append("text")
-      .attr("x",3)
-      .attr("y", function(d,i){ return 10 + i*20})
-      .attr("dy", ".15em")
-      .text(function(d) { return d.key; });
-
-    legend = svg.append("g")
-                .attr("class","legend")
-                .attr("transform","translate(50,30)")
-                .style("font-size","12px")
-                .call(d3.legend) 
-
-*/
+    sumstat2.reverse()
 
   function exists(arr, search) {
     return arr.some(row => row.includes(search));
@@ -362,6 +335,23 @@ function ready(error, data){
   }
 
   function doneSliding(h){
+
+
+  // Updata the line
+  lines.data(sumstat2)
+       .enter()
+       .append("path")
+       .attr("class","line")
+       .merge(lines)
+       .attr("d", function(d){
+          return d3.line()
+                   .x(function(d) { return x(new Date(d.date)); })
+                   .y(function(d) { return y(+0); })
+                     (d.values)
+       })
+
+
+
     console.log("Done Sliding")
     endDate = new Date(formatDate(h));
     var date = formatDate(h);
@@ -412,7 +402,7 @@ function ready(error, data){
     });
 
     // Step 4.3: Get the top 10 countries
-    var topItems = items.slice(0,11)
+    var topItems = items.slice(0,9)
     console.log(topItems)
 
     // Step 5: Get a group of only the first 10 countries (as listed above)
@@ -422,6 +412,10 @@ function ready(error, data){
             datanew2.push(d)
         }
     })
+
+    sumstat2 = d3.nest() // nest function allows to group the calculation per level of a factor
+                 .key(function(d) { return d.iso_code;})
+                 .entries(datanew2);
 
 
 
@@ -434,51 +428,40 @@ function ready(error, data){
         .call(yAxis);
 
 
-      // Updata the line
-  lines
-    .data(sumstat2)
-    .enter()
-    .append("path")
-    .attr("class","line")
-    .merge(lines)
-    .transition()
-    .duration(3000)
-    .attr("d", function(d){
-        return d3.line()
-                 .x(function(d) { return x(new Date(d.date)); })
-                 .y(function(d) { return y(+d.total_cases); })
-                  (d.values)
-    })
-
-
-    legendCircle.data(sumstat2.reverse())
-                .enter()
-                .append("circle")
-                .transition()
-                .duration(2000)
-                .attr("cx",20)
-                .attr("cy",function(d,i){
-                  return 30 + i*15;
-                })
-                .attr("fill", function(d){
-                   return color(d.key); 
-                })
-
-      legendText.data(sumstat2)
-                .enter()
-                .append("text")
-                .transition()
-                .duration(3000)
-                .append("text")
-        .attr("x", 35)
-        .attr("y", function(d,i){
-         return 30 + i*15;
+  // Updata the line
+  lines.data(sumstat2)
+       .enter()
+       .append("path")
+       .attr("class","line")
+       .merge(lines)
+       .transition()
+       .duration(1000)
+       .attr("d", function(d){
+          return d3.line()
+                   .x(function(d) { return x(new Date(d.date)); })
+                   .y(function(d) { return y(+d.total_cases); })
+                     (d.values)
        })
-        .text(function(d){ 
-          return d.key; 
-        })
-        .style("font-size", "15px")
-        .attr("alignment-baseline","middle")
+
+    sumstat2 = d3.nest() // nest function allows to group the calculation per level of a factor
+                 .key(function(d) { return d.iso_code;})
+                 .entries(datanew2);
+
+    legendText.data(sumstat2.reverse())
+              .enter()
+                
+
+    d3.selectAll("text.abc")
+      .each(function(d, i) {
+            if(d.key == "OWID_WRL"){
+              d.key = "WORLD"
+            }
+            d3.select(this).text(d.key);
+          })
+      .transition()
+      .duration(2000)
+
+
 
 
   }
