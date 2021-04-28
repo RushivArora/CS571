@@ -1,0 +1,18 @@
+.idea
+node_modules
+world-countries_2.json
+package-lock.json
+.ipynb_checkpoints
+*.csv
+CountryData
+images/biohazard.png
+
+images/bio2.jpg
+
+*.pem
+
+*.MP4
+
+To Deploy/
+
+.DS_Store

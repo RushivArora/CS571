@@ -7,14 +7,16 @@ final_data_path = os.path.join('data', 'vaccines.csv')
 
 orig_df = pd.read_csv(original_data_path)
 orig_df['date'] = pd.to_datetime('03-30-2021')
-orig_df = orig_df[['FIPS Code', 'Percent adults fully vaccinated against COVID-19', 'date']]
-orig_df = orig_df.rename(columns={'FIPS Code': 'FIPS', 'Percent adults fully vaccinated against COVID-19': 'pct_vacc'})
+orig_df = orig_df[['FIPS Code', 'County Name', 'Percent adults fully vaccinated against COVID-19', 'date']]
+orig_df = orig_df.rename(columns={'County Name': 'name', 'FIPS Code': 'FIPS', 'Percent adults fully vaccinated against COVID-19': 'pct_vacc'})
+id_county_df = orig_df[['FIPS', 'name']].drop_duplicates()
+id_county_df = id_county_df.rename(columns={'FIPS': 'id'})
 orig_df = orig_df.pivot(index=orig_df.date, columns='FIPS')['pct_vacc']
 
 zero_df = pd.read_csv(original_data_path)
 zero_df['date'] = pd.to_datetime('01-15-2021')
-zero_df = zero_df[['FIPS Code', 'Percent adults fully vaccinated against COVID-19', 'date']]
-zero_df = zero_df.rename(columns={'FIPS Code': 'FIPS', 'Percent adults fully vaccinated against COVID-19': 'pct_vacc'})
+zero_df = zero_df[['FIPS Code', 'County Name', 'Percent adults fully vaccinated against COVID-19', 'date']]
+zero_df = zero_df.rename(columns={'County Name': 'name', 'FIPS Code': 'FIPS', 'Percent adults fully vaccinated against COVID-19': 'pct_vacc'})
 zero_df['pct_vacc'] = 0
 zero_df = zero_df.pivot(index=zero_df.date, columns='FIPS')['pct_vacc']
 
@@ -35,8 +37,9 @@ fips_codes.remove('date')
 df = pd.melt(interp_df, id_vars=['date'], value_vars=fips_codes).rename(columns={'variable': 'id', 'value': 'rate'})
 df = df.sort_values(by=['date', 'id'])
 
+df = pd.merge(df, id_county_df, how='left', on='id')
+
 df.id = df.id.astype(int)
 df['id'] = df['id'].apply(lambda x: '0'+str(x) if x <= 9999 else str(x))
-print(df.head())
 
 df.to_csv(final_data_path, index=False)
