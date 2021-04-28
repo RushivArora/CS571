@@ -127,10 +127,16 @@ function usvaccine(){
             })
             .attr("d", path);
 
-          //svg.append("path")
-          //    .datum(topojson.mesh(usa, usa.objects.states, function(a, b) { return a !== b; }))
-          //    .attr("class", "states")
-          //    .attr("d", path);
+            // states
+            svg.append("g")
+              .attr("class", "states")
+              .selectAll("path")
+              .data(topojson.feature(usa, usa.objects.states).features)
+              .enter().append("path")
+              .attr("fill", "none")
+              .style("stroke", "white")
+              .style("stroke-width", "1")
+              .attr("d", path);
 
           // All the work on the slider:
           var startDate = new Date("2021-01-16"),
@@ -147,7 +153,7 @@ function usvaccine(){
 
           var slider = svg.append("g")
                           .attr("class", "slider")
-                          .attr("transform", "translate(" + margin.left + "," + height2 + ")");
+                          .attr("transform", "translate(" + margin.left + "," + 630 + ")");
 
           slider.append("line")
                 .attr("class", "track")

@@ -137,9 +137,15 @@ var formatTime = d3.timeFormat("%B %d, %Y");
           .style("stroke-width",0.3);
         });
 
-        svg.append("path")
-        .datum(topojson.mesh(usa, usa.objects.states, function(a, b) { return a.id !== b.id; }))
+      // states
+      svg.append("g")
         .attr("class", "states")
+        .selectAll("path")
+        .data(topojson.feature(usa, usa.objects.states).features)
+        .enter().append("path")
+        .attr("fill", "none")
+        .style("stroke", "white")
+        .style("stroke-width", "1")
         .attr("d", path);
 
     //All the work on the slider:
@@ -150,7 +156,7 @@ var formatTime = d3.timeFormat("%B %d, %Y");
     var margin2 = {top:0, right:50, bottom:50, left:50},
     width2 = width - margin2.left - margin2.right,
     height2 = height - margin2.top - margin2.bottom + 10;
-    
+
     var x = d3.scaleTime()
     .domain([startDate, endDate])
     .range([margin2.right, width2])
@@ -184,7 +190,7 @@ var formatTime = d3.timeFormat("%B %d, %Y");
     .attr("text-anchor", "middle")
     .text(function(d) { return formatDate(d); });
 
-    var label = slider.append("text")  
+    var label = slider.append("text")
     .attr("class", "label")
     .attr("text-anchor", "middle")
     .text(formatTime(startDate))

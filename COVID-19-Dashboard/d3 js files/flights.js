@@ -20,8 +20,8 @@ function flightData(){
                       .offset([-10, 0])
                       .html(d => `<strong>Airport: </strong><span class='details'>${d.name}<br></span><strong>Pct Baseline: </strong><span class='details'>${d.rate}%</span>`);
 
-        var width = +svg.attr("width"),
-            height = +svg.attr("height");
+        var width = +svg.attr("width")
+        var height = +svg.attr("height");
 
         const margin = {top: 0, right: 0, bottom: 0, left: 0};
         //const width  = 960 - margin.left - margin.right;
@@ -144,10 +144,16 @@ function flightData(){
 
           //console.log(topojson.feature(usa, usa.objects.counties).features)
 
-          //svg.append("path")
-          //    .datum(topojson.mesh(usa, usa.objects.states, function(a, b) { return a !== b; }))
-          //    .attr("class", "states")
-          //    .attr("d", path);
+          // states
+          svg.append("g")
+            .attr("class", "states")
+            .selectAll("path")
+            .data(topojson.feature(usa, usa.objects.states).features)
+            .enter().append("path")
+            .attr("fill", "none")
+            .style("stroke", "white")
+            .style("stroke-width", "1")
+            .attr("d", path);
 
           svg.selectAll("circles.points")
            .data(airports.features)
@@ -195,7 +201,7 @@ function flightData(){
 
           var slider = svg.append("g")
                           .attr("class", "slider")
-                          .attr("transform", "translate(" + margin.left + "," + height2 + ")");
+                          .attr("transform", "translate(" + margin.left + "," + 630 + ")");
 
           slider.append("line")
                 .attr("class", "track")

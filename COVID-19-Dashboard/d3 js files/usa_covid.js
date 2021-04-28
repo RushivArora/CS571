@@ -95,7 +95,9 @@ function usaMap(){
           const casesById = {};
           const nameById = {};
           const allDates = {};
-          var count = 0
+
+
+
           cases.forEach(d => {
             if(formatTime(parseTime(d.date)) == formatTime(globalStart)){
               casesById[d.id] = d.rate;
@@ -108,13 +110,15 @@ function usaMap(){
 
           var casesByIdList = d3.entries(casesById);
 
+
+
+          // counties
           svg.append("g")
             .attr("class", "counties")
             .selectAll("path")
             .data(topojson.feature(usa, usa.objects.counties).features)
             .enter().append("path")
             .attr("fill", function(d) {
-                count = count + 1;
                 return color(d.rate = casesById[d.id]);
             })
             // tooltips
@@ -132,11 +136,20 @@ function usaMap(){
                 //.style('stroke-width',0.2);
             })
             .attr("d", path);
-            console.log(count)
-          //svg.append("path")
-          //    .datum(topojson.mesh(usa, usa.objects.states, function(a, b) { return a !== b; }))
-          //    .attr("class", "states")
-          //    .attr("d", path);
+
+
+            // states
+            svg.append("g")
+              .attr("class", "states")
+              .selectAll("path")
+              .data(topojson.feature(usa, usa.objects.states).features)
+              .enter().append("path")
+              .attr("fill", "none")
+              .style("stroke", "white")
+              .style("stroke-width", "1")
+              .attr("d", path);
+
+
 
           // All the work on the slider:
           var startDate = new Date("2020-05-30"),
@@ -153,7 +166,7 @@ function usaMap(){
 
           var slider = svg.append("g")
                           .attr("class", "slider")
-                          .attr("transform", "translate(" + margin.left + "," + height2 + ")");
+                          .attr("transform", "translate(" + margin.left + "," + 630 + ")");
 
           slider.append("line")
                 .attr("class", "track")
