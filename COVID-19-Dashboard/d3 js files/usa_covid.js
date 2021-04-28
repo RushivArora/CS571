@@ -149,6 +149,55 @@ function usaMap(){
               .style("stroke-width", "1")
               .attr("d", path);
 
+            // description
+            function wrap(text, width) {
+                text.each(function () {
+                    var text = d3.select(this),
+                        words = text.text().split(/\s+/).reverse(),
+                        word,
+                        line = [],
+                        lineNumber = 0,
+                        lineHeight = 1.1, // ems
+                        x = text.attr("x"),
+                        y = text.attr("y"),
+                        dy = 0, //parseFloat(text.attr("dy")),
+                        tspan = text.text(null)
+                                    .append("tspan")
+                                    .attr("x", x)
+                                    .attr("y", y)
+                                    .attr("dy", dy + "em");
+                    while (word = words.pop()) {
+                        line.push(word);
+                        tspan.text(line.join(" "));
+                        if (tspan.node().getComputedTextLength() > width) {
+                            line.pop();
+                            tspan.text(line.join(" "));
+                            line = [word];
+                            tspan = text.append("tspan")
+                                        .attr("x", x)
+                                        .attr("y", y)
+                                        .attr("dy", ++lineNumber * lineHeight + dy + "em")
+                                        .text(word);
+                        }
+                    }
+                });
+            }
+            var desc = svg.append("g")
+                            .attr("class", "description")
+                            //.attr("transform", "translate(" + 50 + "," + 700 + ")");
+            desc.append("text")
+              .attr('x', 50)
+              .attr('y', 720)
+              .attr("fill", "black")
+              .attr('font-size', 16)
+              .text("The above map shows the spread of COVID-19 across counties \
+                    in the United States from 5/29/2020 to 4/18/2021. The red hue \
+                    represents the number of cases per 100,000 in the county on the \
+                    given day based on the scale in the top right. The darker the red, \
+                    the more cases. Use the slider to view different days throughout the time range.\
+                    Hover over counties for detailed information.")
+              .call(wrap, 800);
+
 
 
           // All the work on the slider:

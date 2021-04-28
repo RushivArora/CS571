@@ -138,6 +138,66 @@ function usvaccine(){
               .style("stroke-width", "1")
               .attr("d", path);
 
+              // description
+              function wrap(text, width) {
+                  text.each(function () {
+                      var text = d3.select(this),
+                          words = text.text().split(/\s+/).reverse(),
+                          word,
+                          line = [],
+                          lineNumber = 0,
+                          lineHeight = 1.1, // ems
+                          x = text.attr("x"),
+                          y = text.attr("y"),
+                          dy = 0, //parseFloat(text.attr("dy")),
+                          tspan = text.text(null)
+                                      .append("tspan")
+                                      .attr("x", x)
+                                      .attr("y", y)
+                                      .attr("dy", dy + "em");
+                      while (word = words.pop()) {
+                          line.push(word);
+                          tspan.text(line.join(" "));
+                          if (tspan.node().getComputedTextLength() > width) {
+                              line.pop();
+                              tspan.text(line.join(" "));
+                              line = [word];
+                              tspan = text.append("tspan")
+                                          .attr("x", x)
+                                          .attr("y", y)
+                                          .attr("dy", ++lineNumber * lineHeight + dy + "em")
+                                          .text(word);
+                          }
+                      }
+                  });
+              }
+              var warn = svg.append("g")
+                              .attr("class", "warning")
+                              //.attr("transform", "translate(" + 50 + "," + 700 + ")");
+              warn.append("text")
+                .attr('x', 50)
+                .attr('y', 690)
+                .attr("fill", "black")
+                .attr('font-size', 16)
+                .text("WARNING: The data displayed is an estimate based on real data from 3/30/2021. \
+                      All data before 3/30/2021 is modeled backwards in time based on that the real day.")
+                .call(wrap, 800);
+              var desc = svg.append("g")
+                              .attr("class", "description")
+                              //.attr("transform", "translate(" + 50 + "," + 700 + ")");
+              desc.append("text")
+                .attr('x', 50)
+                .attr('y', 730)
+                .attr("fill", "black")
+                .attr('font-size', 16)
+                .text("The above map shows the distribution of COVID-19 vaccines across counties \
+                      in the United States from 1/15/2021 to 3/30/2021. The blue hue \
+                      represents the percentage of fully vaccinated adults in the county on the \
+                      given day based on the scale in the top right. The darker the blue, \
+                      the higher the percentage vaccinated. Use the slider to view different \
+                      days throughout the time range. Hover over counties for detailed information.")
+                .call(wrap, 800);
+
           // All the work on the slider:
           var startDate = new Date("2021-01-16"),
               endDate = new Date("2021-03-31");
