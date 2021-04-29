@@ -18,7 +18,7 @@ var tip = d3.tip()
 })
 
 
-var margin = {top: 0, right:0, bottom: 100, left: 90},
+var margin = {top: 0, right:0, bottom: 50, left: 90},
 width = document.getElementById('lineGraphDiv').offsetWidth - margin.left - margin.right,
 height = document.getElementById('lineGraphDiv').offsetHeight - margin.top - margin.bottom;
 
@@ -36,6 +36,13 @@ var globalStart = new Date("2021-03-14");
 queue()
 .defer(d3.csv, '../owid-covid-data.csv')
 .await(ready);
+
+var svg = d3.select("#lineGraphNode")
+            .attr("width", width)
+            .attr("height", height)
+            .append('g')
+            .attr('class', 'map')
+            .append("g").attr('transform','translate(100,-20)');
 
 console.log(startDate)
 var check = 0;
@@ -140,7 +147,7 @@ function ready(error, data){
   // Add Y axis
   var y = d3.scaleLinear()
             .domain([0, d3.max(data, function(d) { return +d.total_cases; })])
-            .range([ height, 0 ]);
+            .range([ height-10, 0 ]);
 
   var yAxis = d3.axisLeft()
                 .scale(y);
@@ -220,7 +227,7 @@ function ready(error, data){
   ALL THE SLIDER STUFF
   */
 
-  var margin2 = {top:0, right:50, bottom:30, left:30},
+  var margin2 = {top:0, right:50, bottom:0, left:30},
     width2 = width - margin2.left - margin2.right,
     height2 = height - margin2.top - margin2.bottom + margin.top + margin.bottom;
 
@@ -231,7 +238,7 @@ function ready(error, data){
 
   var slider = svg.append("g")
                   .attr("class", "slider")
-                  .attr("transform", "translate(" + margin2.left + "," + height2 + ")");
+                  .attr("transform", "translate(" + margin2.left + "," + 1030 + ")");
 
   slider.append("line")
         .attr("class", "track")

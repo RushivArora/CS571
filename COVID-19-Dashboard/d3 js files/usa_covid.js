@@ -98,6 +98,13 @@ function usaMap(){
             .defer(d3.csv, "../cases.csv") //, function(d) { cases.set(d.id, +d.rate); })
             .await(ready);
 
+        var svg = d3.select("#node")
+            .attr("width", width)
+            .attr("height", height)
+            .append('g')
+            .attr('class', 'map')
+            .append("g").attr('transform','translate(200,100)');
+
         function ready(error, usa, cases) {
           if (error) throw error;
 
@@ -194,7 +201,7 @@ function usaMap(){
                             .attr("class", "description")
                             //.attr("transform", "translate(" + 50 + "," + 700 + ")");
             desc.append("text")
-              .attr('x', 50)
+              .attr('x', -150)
               .attr('y', 720)
               .attr("fill", "black")
               .attr('font-size', 16)
@@ -204,7 +211,7 @@ function usaMap(){
                     given day based on the scale in the top right. The darker the red, \
                     the more cases. Use the slider to view different days throughout the time range.\
                     Hover over counties for detailed information.")
-              .call(wrap, 800);
+              .call(wrap, 1200);
 
 
 
@@ -223,7 +230,7 @@ function usaMap(){
 
           var slider = svg.append("g")
                           .attr("class", "slider")
-                          .attr("transform", "translate(" + margin.left + "," + 630 + ")");
+                          .attr("transform", "translate(" + -150 + "," + 630 + ")");
 
           slider.append("line")
                 .attr("class", "track")

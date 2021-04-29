@@ -162,6 +162,63 @@ function ready(error, data, covid_map) {
         .attr("class", "names")
         .attr("d", path);
 
+        //Description
+        function wrap(text, width) {
+               text.each(function () {
+                   var text = d3.select(this),
+                       words = text.text().split(/\s+/).reverse(),
+                       word,
+                       line = [],
+                       lineNumber = 0,
+                       lineHeight = 1.1, // ems
+                       x = text.attr("x"),
+                       y = text.attr("y"),
+                       dy = 0, //parseFloat(text.attr("dy")),
+                       tspan = text.text(null)
+                                   .append("tspan")
+                                   .attr("x", x)
+                                   .attr("y", y)
+                                   .attr("dy", dy + "em");
+                   while (word = words.pop()) {
+                       line.push(word);
+                       tspan.text(line.join(" "));
+                       if (tspan.node().getComputedTextLength() > width) {
+                           line.pop();
+                           tspan.text(line.join(" "));
+                           line = [word];
+                           tspan = text.append("tspan")
+                                       .attr("x", x)
+                                       .attr("y", y)
+                                       .attr("dy", ++lineNumber * lineHeight + dy + "em")
+                                       .text(word);
+                       }
+                   }
+               });
+           }
+           var desc = svg.append("g")
+                           .attr("class", "description")
+                           //.attr("transform", "translate(" + 50 + "," + 700 + ")");
+           desc.append("text")
+             .attr('x', 50)
+             .attr('y', 775)
+             .attr("fill", "black")
+             .attr('font-size', 16)
+             .text("This visualisation displays the progression of the Covid-19 pandemic distribution over time in all the countries in the world.\
+              The period of time covered in this visualisation is 01/01/2020 - 04/13/2021.")
+              .call(wrap, 1200);
+
+          var note = svg.append("g")
+                              .attr("class", "note")
+                              //.attr("transform", "translate(" + 50 + "," + 700 + ")");
+              note.append("text")
+                .attr('x', 50)
+                .attr('y', 810)
+                .attr("fill", "black")
+                .attr('font-size', 16)
+                .attr('font-weight','bold')
+                .text("Note: Data for countries with political disputes, such as North Korea, is not available.")
+                .call(wrap, 1200);
+
     //All the work on the slider:
 
     var startDate = new Date("2020-01-01"),

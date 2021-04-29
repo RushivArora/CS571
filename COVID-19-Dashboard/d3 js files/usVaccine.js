@@ -95,6 +95,13 @@ function usvaccine(){
             .defer(d3.csv, "../vaccines.csv") //, function(d) { cases.set(d.id, +d.rate); })
             .await(ready);
 
+        var svg = d3.select("#usvacNode")
+            .attr("width", width)
+            .attr("height", height)
+            .append('g')
+            .attr('class', 'map')
+            .append("g").attr('transform','translate(200,100)');
+
         function ready(error, usa, vaccines) {
           if (error) throw error;
           const vaccinesById = {};
@@ -184,18 +191,19 @@ function usvaccine(){
                               .attr("class", "warning")
                               //.attr("transform", "translate(" + 50 + "," + 700 + ")");
               warn.append("text")
-                .attr('x', 50)
+                .attr('x', -150)
                 .attr('y', 690)
                 .attr("fill", "black")
                 .attr('font-size', 16)
+                .attr('font-weight','bold')
                 .text("WARNING: The data displayed is an estimate based on real data from 3/30/2021. \
                       All data before 3/30/2021 is modeled backwards in time based on that the real day.")
-                .call(wrap, 800);
+                .call(wrap, 1200);
               var desc = svg.append("g")
                               .attr("class", "description")
                               //.attr("transform", "translate(" + 50 + "," + 700 + ")");
               desc.append("text")
-                .attr('x', 50)
+                .attr('x', -150)
                 .attr('y', 730)
                 .attr("fill", "black")
                 .attr('font-size', 16)
@@ -205,7 +213,7 @@ function usvaccine(){
                       given day based on the scale in the top right. The darker the blue, \
                       the higher the percentage vaccinated. Use the slider to view different \
                       days throughout the time range. Hover over counties for detailed information.")
-                .call(wrap, 800);
+                .call(wrap, 1200);
 
           // All the work on the slider:
           var startDate = new Date("2021-01-16"),
@@ -222,7 +230,7 @@ function usvaccine(){
 
           var slider = svg.append("g")
                           .attr("class", "slider")
-                          .attr("transform", "translate(" + margin.left + "," + 630 + ")");
+                          .attr("transform", "translate(" + -150 + "," + 630 + ")");
 
           slider.append("line")
                 .attr("class", "track")

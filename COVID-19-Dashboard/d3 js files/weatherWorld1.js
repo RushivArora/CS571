@@ -101,7 +101,7 @@ var x = d3.scaleLinear()
     .attr("height", height)
     .append('g')
     .attr('class', 'map')
-    .append("g").attr('transform','translate(50,50)');
+    .append("g").attr('transform','translate(0,50)');
 
 
     // var projection = d3.geoMercator()
@@ -203,8 +203,8 @@ function ready(error, data, covid_map) {
 
     //All the work on the slider:
 
-    var startDate = new Date("2020-04-30"),
-    endDate = new Date("2019-01-23");
+    var startDate = new Date("2019-01-23"),
+    endDate = new Date("2020-04-25");
 
     var margin2 = {top:0, right:50, bottom:50, left:50},
     width2 = width - margin2.left - margin2.right,
