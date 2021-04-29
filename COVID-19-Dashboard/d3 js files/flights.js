@@ -122,7 +122,7 @@ function flightData(){
 
           flights.forEach(d => {
             if(formatTime(parseTimeAirport(d.Date)) == formatTime(globalStart)){
-              flightsById[d.AirportName] = +d.PercentOfBaseline;}
+              flightsById[d.AirportName.trim()] = +d.PercentOfBaseline;}
           });
 
           topojson.feature(usa, usa.objects.counties).features.forEach(d => { d.rate = casesById[d.id] });
@@ -328,9 +328,11 @@ function flightData(){
              });
 
              svg.call(airtip);
-
+             console.log(flightsById)
              svg.selectAll("circle")
                .attr("r", function(d) {
+                 console.log(d.name)
+                 console.log(flightsById[d.name])
                  d.rate = flightsById[d.name]
                  if(isNaN(flightsById[d.name])){
                    return 5;
