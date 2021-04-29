@@ -245,7 +245,8 @@ function flightData(){
              .attr('font-size', 16)
              .text("The above map shows airport activity as well as the spread of COVID-19 across counties \
                    in the United States from 5/29/2020 to 12/1/2020. The size of the airport represents \
-                   the percentage of flights over the baseline for that airport. The red hue \
+                   the percentage of flights over the baseline for that airport. The baseline is flight \
+                   activity from 2/1/21 to 3/15/21. The red hue \
                    represents the number of cases per 100,000 in the county on the \
                    given day based on the scale in the top right. The darker the red, \
                    the more cases. Use the slider to view different days throughout the time range. Hover over airports \

@@ -197,7 +197,7 @@ function usvaccine(){
                 .attr('font-size', 16)
                 .attr('font-weight','bold')
                 .text("WARNING: The data displayed is an estimate based on real data from 3/30/2021. \
-                      All data before 3/30/2021 is modeled backwards in time based on that the real day.")
+                      All data before 3/30/2021 is linearly interpolated backwards in time based on that real day.")
                 .call(wrap, 1200);
               var desc = svg.append("g")
                               .attr("class", "description")
