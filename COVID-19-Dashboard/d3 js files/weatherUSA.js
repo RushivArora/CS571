@@ -48,7 +48,7 @@ function weatherUSA1(){
         var formatTime = d3.timeFormat("%B %d, %Y");
 
         var parseTime = d3.timeParse("%m-%d-%Y");
-        var globalStart = new Date("2019-01-23");
+        var globalStart = new Date("2019-01-24");
         var check = 0;
 
         var g = svg.append("g")
@@ -144,7 +144,7 @@ function weatherUSA1(){
 
           // All the work on the slider:
           var startDate = new Date("2020-04-30"),
-              endDate = new Date("2019-01-23");
+              endDate = new Date("2019-01-24");
 
           var margin2 = {top:0, right:50, bottom:50, left:50},
             width2 = width - margin2.left - margin2.right,

@@ -16,7 +16,7 @@ const tip = d3.tip()
               .html(d => `<strong>Country: </strong><span class='details'>${d.properties.name}<br></span><strong>Vacinations per 100: </strong><span class='details'>${format(d.totalperhundred)}<br></span><strong>Total Vaccinations: </strong><span class='details'>${format(d.total)}</span>`);
 
 
-var margin = {top: 150, right: 0, bottom: 0, left: 10},
+var margin = {top: 0, right: 0, bottom: 0, left: 10},
 width = document.getElementById('latestCaseDiv').offsetWidth - margin.left - margin.right,
 height = document.getElementById('latestCaseDiv').offsetHeight + margin.top - margin.bottom;
 
@@ -28,7 +28,7 @@ var formatDateIntoYear = d3.timeFormat("%Y");
 var formatDate = d3.timeFormat("%b %Y");
 var formatTime = d3.timeFormat("%B %d, %Y");
 const projection = d3.geoRobinson()
-                     .scale(148)
+                     .scale(200)
                      .rotate([352, 0, 0])
                      .translate( [width / 2, (height - 100) / 2]);
 
@@ -152,7 +152,7 @@ function ready(error, data, covid_map) {
 
     var slider = svg.append("g")
     .attr("class", "slider")
-    .attr("transform", "translate(" + margin2.left + "," + 650 + ")");
+    .attr("transform", "translate(" + margin2.left + "," + 700 + ")");
 
     slider.append("line")
     .attr("class", "track")

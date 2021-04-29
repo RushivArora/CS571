@@ -18,7 +18,7 @@ var tip = d3.tip()
 })
 
 
-var margin = {top: 150, right: 0, bottom: 0, left: 10},
+var margin = {top: 0, right: 0, bottom: 0, left: 10},
 width = document.getElementById('nodeDiv').offsetWidth - margin.left - margin.right,
 height = document.getElementById('nodeDiv').offsetHeight + margin.top - margin.bottom;
 
@@ -52,7 +52,7 @@ var svg = d3.select("#node")
 // .translate( [width/2.3, height / 1.85]);
 
 const projection = d3.geoRobinson()
-                     .scale(148)
+                     .scale(200)
                      .rotate([352, 0, 0])
                      .translate( [width / 2, (height - 100) / 2]);
 
@@ -167,7 +167,7 @@ function ready(error, data, covid_map) {
 
     var slider = svg.append("g")
     .attr("class", "slider")
-    .attr("transform", "translate(" + margin.left + "," + 615 + ")");
+    .attr("transform", "translate(" + (margin.left-20) + "," + 700 + ")");
 
     slider.append("line")
     .attr("class", "track")
