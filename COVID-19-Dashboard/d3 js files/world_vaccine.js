@@ -1,6 +1,6 @@
 function vaccineWorld(){
 
-  var svg = d3.selectAll('#latestCasesNode').attr('width',document.getElementById('latestCaseDiv').offsetWidth);
+  var svg = d3.selectAll('#latestCasesNode').attr('width',document.getElementById('latestCaseDiv'));
         //Using this selection to update the SVG everytime the function is called
         svg.selectAll("*").remove();
 
@@ -152,7 +152,7 @@ function ready(error, data, covid_map) {
 
     var slider = svg.append("g")
     .attr("class", "slider")
-    .attr("transform", "translate(" + margin2.left + "," + 20 + ")");
+    .attr("transform", "translate(" + margin2.left + "," + 650 + ")");
 
     slider.append("line")
     .attr("class", "track")

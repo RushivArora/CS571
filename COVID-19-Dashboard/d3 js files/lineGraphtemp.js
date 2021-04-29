@@ -18,7 +18,7 @@ var tip = d3.tip()
 })
 
 
-var margin = {top: 0, right:0, bottom: 100, left: 200},
+var margin = {top: 0, right:0, bottom: 100, left: 90},
 width = document.getElementById('lineGraphDiv').offsetWidth - margin.left - margin.right,
 height = document.getElementById('lineGraphDiv').offsetHeight - margin.top - margin.bottom;
 
@@ -272,7 +272,7 @@ function ready(error, data){
 
   }
 
-  function doneSliding(h){
+ function doneSliding(h){
 
 
   // Updata the line
@@ -353,7 +353,13 @@ function ready(error, data){
 
     sumstat2 = d3.nest() // nest function allows to group the calculation per level of a factor
                  .key(function(d) { return d.iso_code;})
-                 .entries(datanew2);
+                 .entries(datanew2)
+                 //.sort(function(a, b){ return d3.ascending(a.values, b.values); })
+    res2 = topItems.map(function(d){ return d[0] })
+    console.log(res2)
+    color = d3.scaleOrdinal()
+              .domain(res2.reverse())
+              .range(['#003f5c','#2f4b7c','#665191','#a05195','#d45087','#f95d6a','#ff7c43','#ffa600','#fbe0c4'])
 
 
 
@@ -374,6 +380,7 @@ function ready(error, data){
        .merge(lines)
        .transition()
        .duration(1000)
+       .attr("stroke", function(d){ return color(d.key) })
        .attr("d", function(d){
           return d3.line()
                    .x(function(d) { return x(new Date(d.date)); })
@@ -383,11 +390,28 @@ function ready(error, data){
 
     sumstat2 = d3.nest() // nest function allows to group the calculation per level of a factor
                  .key(function(d) { return d.iso_code;})
-                 .entries(datanew2);
+                 .entries(datanew2)
+                 .sort(function(a, b){ return d3.ascending(a.values, b.values); })
+
+  //console.log(topItems)
+  //console.log(sumstat2)
 
     legendText.data(topItems)
               .enter()
+
+    legendCircle.data(topItems)
+                .enter()
                 
+    d3.selectAll("circle.abc2")
+      .each(function(d, i) {
+        console.log(d)
+            if(d[0] == "OWID_WRL"){
+              d[0] = "WORLD"
+            }
+            d3.select(this).style(color(d[0]));
+          })
+      .transition()
+      .duration(2000)      
 
     d3.selectAll("text.abc")
       .each(function(d, i) {
@@ -400,8 +424,7 @@ function ready(error, data){
       .duration(2000)
 
 
-
-    }
+  }
 
 
 

@@ -1,6 +1,6 @@
 function heatMap1(){
 
-  var svg = d3.selectAll('#node').attr('width',document.getElementById('nodeDiv').offsetWidth);
+  var svg = d3.selectAll('#node').attr('width',document.getElementById('nodeDiv'));
         //Using this selection to update the SVG everytime the function is called
         svg.selectAll("*").remove();
 
@@ -29,28 +29,32 @@ var formatDateIntoYear = d3.timeFormat("%Y");
 var formatDate = d3.timeFormat("%b %Y");
 var formatTime = d3.timeFormat("%B %d, %Y");
 
-zoomed = ()=>{
-  const {x,y,k} = d3.event.transform
-  let t = d3.zoomIdentity
-  t =  t.translate(x,y).scale(k).translate(50,50)
-  svg.attr("transform", t)
-}
-var zoom = d3.zoom()
-.scaleExtent([1, 30])
-.on("zoom", zoomed);
+// zoomed = ()=>{
+//   const {x,y,k} = d3.event.transform
+//   let t = d3.zoomIdentity
+//   t =  t.translate(x,y).scale(k).translate(50,50)
+//   svg.attr("transform", t)
+// }
+// var zoom = d3.zoom()
+// .scaleExtent([1, 30])
+// .on("zoom", zoomed);
 
 var svg = d3.select("#node")
 .attr("width", width)
 .attr("height", height)
-.call(zoom)
 .append('g')
 .attr('class', 'map')
 .append("g").attr('transform','translate(50,50)');
 
 
-var projection = d3.geoMercator()
-.scale(0.03939*width + 0.104166*height+20)
-.translate( [width/2.3, height / 1.85]);
+// var projection = d3.geoMercator()
+// .scale(0.03939*width + 0.104166*height+20)
+// .translate( [width/2.3, height / 1.85]);
+
+const projection = d3.geoRobinson()
+                     .scale(148)
+                     .rotate([352, 0, 0])
+                     .translate( [width / 2, (height - 100) / 2]);
 
 var path = d3.geoPath().projection(projection);
 
