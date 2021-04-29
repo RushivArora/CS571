@@ -42,7 +42,7 @@ var svgall = d3.select("#lineGraphNode")
             .attr("height", height)
             .append('g')
             .attr('class', 'map')
-            .append("g").attr('transform','translate(100,-20)');
+            .append("g").attr('transform','translate(100, 0)');
 orig_height = height
 height = height - 200
 svg = svgall.attr("width", width)

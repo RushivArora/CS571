@@ -58,7 +58,7 @@
                     <svg style = 'padding-top:3%;' height="100%" width="100%" id = "Top6" class = 'zulu'></svg>
                 </div> -->
                 <!-- World Race graph -->
-                <div class = 'card' style = 'height:70vh; background : #17252A;margin-bottom: 3%;' id = 'worldRaceDiv'>
+                <div class = 'card' style = 'height:60vh; background : #17252A;margin-bottom: 3%;' id = 'worldRaceDiv'>
                     <svg width="100%" height="100%" id = "worldRace" class = 'charlie'></svg>
                 </div>
                 <!-- Percent infectionstatus graph -->
@@ -84,7 +84,7 @@
                     <svg height ='100%' width="100%" id = "flightNode" class = 'bravo'></svg>                   
                 </div>
 
-                <div class = 'card' style = 'height:150vh; width:110%; background: #BADEF7;margin-bottom: 1.5%;' id = 'lineGraphDiv'>
+                <div class = 'card' style = 'height:100vh; width:110%; background: #BADEF7;margin-bottom: 1.5%;' id = 'lineGraphDiv'>
                     <svg height ='100%' width="100%" id = "lineGraphNode" class = 'bravo'></svg>                   
                 </div>
 
@@ -193,6 +193,8 @@
       }
 
       function usaFn() {
+            worldRace("US");
+            worldPercent("US");
             document.getElementById('flightDiv').style.display= 'none';
             document.getElementById("nodeDiv").style.display = "block";
             document.getElementById("latestCaseDiv").style.display = "none";
@@ -382,7 +384,7 @@
     }
 
 .details{
-	color:white;
+	color: white;
 }
 
 </style>

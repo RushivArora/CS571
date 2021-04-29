@@ -201,6 +201,67 @@ function ready(error, data, covid_map) {
             .attr("class", "names")
             .attr("d", path);
 
+            // description
+              function wrap(text, width) {
+                  text.each(function () {
+                      var text = d3.select(this),
+                          words = text.text().split(/\s+/).reverse(),
+                          word,
+                          line = [],
+                          lineNumber = 0,
+                          lineHeight = 1.1, // ems
+                          x = text.attr("x"),
+                          y = text.attr("y"),
+                          dy = 0, //parseFloat(text.attr("dy")),
+                          tspan = text.text(null)
+                                      .append("tspan")
+                                      .attr("x", x)
+                                      .attr("y", y)
+                                      .attr("dy", dy + "em");
+                      while (word = words.pop()) {
+                          line.push(word);
+                          tspan.text(line.join(" "));
+                          if (tspan.node().getComputedTextLength() > width) {
+                              line.pop();
+                              tspan.text(line.join(" "));
+                              line = [word];
+                              tspan = text.append("tspan")
+                                          .attr("x", x)
+                                          .attr("y", y)
+                                          .attr("dy", ++lineNumber * lineHeight + dy + "em")
+                                          .text(word);
+                          }
+                      }
+                  });
+              }
+              
+              var desc = svg.append("g")
+                              .attr("class", "description")
+                              //.attr("transform", "translate(" + 50 + "," + 700 + ")");
+              desc.append("text")
+                .attr('x', 50)
+                .attr('y', 800)
+                .attr("fill", "black")
+                .attr('font-size', 16)
+                .text("The above map shows Relative COVID-19 Risk due to Weather(CRW). \
+                  CRW compares the relative changes in reproductive number for the disease due \
+                  to weather factors .\
+                   For example, a shift over a season in CRW from 1 (the 95 percentile in our sample) to 0.7 in a given location points to a 30% reduction")
+                .call(wrap, 1200);
+
+            var warn = svg.append("g")
+                              .attr("class", "warning")
+                              //.attr("transform", "translate(" + 50 + "," + 700 + ")");
+              warn.append("text")
+                .attr('x', 50)
+                .attr('y', 840)
+                .attr("fill", "black")
+                .attr('font-size', 16)
+                .attr('font-weight','bold')
+                .text("NOTE : Estimated Values based on weather factors\
+                  (average and diurnal temperature, ultraviolet (UV) index, humidity, pressure, precipitation).")
+                .call(wrap, 1200);
+
     //All the work on the slider:
 
     var startDate = new Date("2019-01-23"),
@@ -217,7 +278,7 @@ function ready(error, data, covid_map) {
 
     var slider = svg.append("g")
     .attr("class", "slider")
-    .attr("transform", "translate(" + margin.left + "," + 750 + ")");
+    .attr("transform", "translate(" + margin.left + "," + 740 + ")");
 
     slider.append("line")
     .attr("class", "track")

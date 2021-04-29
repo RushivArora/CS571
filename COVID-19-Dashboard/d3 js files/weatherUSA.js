@@ -156,6 +156,64 @@ function weatherUSA1(){
             .style("stroke-width", "1")
             .attr("d", path);
 
+            // description
+              function wrap(text, width) {
+                  text.each(function () {
+                      var text = d3.select(this),
+                          words = text.text().split(/\s+/).reverse(),
+                          word,
+                          line = [],
+                          lineNumber = 0,
+                          lineHeight = 1.1, // ems
+                          x = text.attr("x"),
+                          y = text.attr("y"),
+                          dy = 0, //parseFloat(text.attr("dy")),
+                          tspan = text.text(null)
+                                      .append("tspan")
+                                      .attr("x", x)
+                                      .attr("y", y)
+                                      .attr("dy", dy + "em");
+                      while (word = words.pop()) {
+                          line.push(word);
+                          tspan.text(line.join(" "));
+                          if (tspan.node().getComputedTextLength() > width) {
+                              line.pop();
+                              tspan.text(line.join(" "));
+                              line = [word];
+                              tspan = text.append("tspan")
+                                          .attr("x", x)
+                                          .attr("y", y)
+                                          .attr("dy", ++lineNumber * lineHeight + dy + "em")
+                                          .text(word);
+                          }
+                      }
+                  });
+              }
+              
+              var desc = svg.append("g")
+                              .attr("class", "description")
+                              //.attr("transform", "translate(" + 50 + "," + 700 + ")");
+              desc.append("text")
+                .attr('x', 50)
+                .attr('y', 700)
+                .attr("fill", "black")
+                .attr('font-size', 16)
+                .text("The above map shows Relative COVID-19 Risk due to Weather(CRW) by US county.")
+                .call(wrap, 1200);
+
+            var warn = svg.append("g")
+                              .attr("class", "warning")
+                              //.attr("transform", "translate(" + 50 + "," + 700 + ")");
+              warn.append("text")
+                .attr('x', 50)
+                .attr('y', 750)
+                .attr("fill", "black")
+                .attr('font-size', 16)
+                .attr('font-weight','bold')
+                .text("NOTE : Estimated Values based on weather factors\
+                  (average and diurnal temperature, ultraviolet (UV) index, humidity, pressure, precipitation).")
+                .call(wrap, 1200);
+
 
 
           // All the work on the slider:
