@@ -37,12 +37,19 @@ queue()
 .defer(d3.csv, '../owid-covid-data.csv')
 .await(ready);
 
-var svg = d3.select("#lineGraphNode")
+var svgall = d3.select("#lineGraphNode")
             .attr("width", width)
             .attr("height", height)
             .append('g')
             .attr('class', 'map')
             .append("g").attr('transform','translate(100,-20)');
+orig_height = height
+height = height - 200
+svg = svgall.attr("width", width)
+            .attr("height", height)
+            .append('g')
+            .attr('class', 'plot')
+            .append("g");//.attr('transform','translate(0,-20)');
 
 console.log(startDate)
 var check = 0;
@@ -155,7 +162,7 @@ function ready(error, data){
 
   svg.append("g")
         .attr("class", "x axis")
-        .attr("transform", "translate(0," + height + ")")
+        .attr("transform", "translate(0," + (height) + ")")
         .call(xAxis);
 
   //Create Y axis
@@ -236,9 +243,9 @@ function ready(error, data){
                    .range([0, width2])
                    .clamp(true);
 
-  var slider = svg.append("g")
+  var slider = svgall.append("g")
                   .attr("class", "slider")
-                  .attr("transform", "translate(" + margin2.left + "," + 1030 + ")");
+                  .attr("transform", "translate(" + 0 + "," + (orig_height-125) + ")");
 
   slider.append("line")
         .attr("class", "track")
