@@ -73,6 +73,17 @@ var rowConverter = function(d) {
 
 var check = 0;
 
+
+
+svg.append("text")
+  .attr("x", (width / 2))
+  .attr("y", 30)
+  .attr("text-anchor", "middle")
+  .style("font-size", 30)
+  .style("font-weigth", "bold")
+  .style("text-decoration", "underline")
+  .text("World Cases Map");
+
 queue()
 .defer(d3.json, '../world_countries.json')
 .defer(d3.csv, '../owid-covid-data.csv')
@@ -84,7 +95,7 @@ function ready(error, data, covid_map) {
 
   const populationById = {};
   const allDates = {};
-  covid_map.forEach(d => { 
+  covid_map.forEach(d => {
     if(formatTime(parseTime(d.date)) == formatTime(globalStart)){
       populationById[d.iso_code] = +d.total_cases;}
     });
@@ -159,7 +170,7 @@ function ready(error, data, covid_map) {
     var margin2 = {top:0, right:50, bottom:50, left:50},
     width2 = width - margin2.left - margin2.right,
     height2 = height;
-    
+
     var x = d3.scaleTime()
     .domain([startDate, endDate])
     .range([margin2.right, width2])
@@ -193,7 +204,7 @@ function ready(error, data, covid_map) {
     .attr("text-anchor", "middle")
     .text(function(d) { return formatDate(d); });
 
-    var label = slider.append("text")  
+    var label = slider.append("text")
     .attr("class", "label")
     .attr("text-anchor", "middle")
     .text(formatTime(globalStart))
@@ -217,7 +228,7 @@ function ready(error, data, covid_map) {
       .text(formatTime(h));
 
       var code = "Hello"
-      covid_map.forEach(d => { 
+      covid_map.forEach(d => {
         if(code != d.iso_code){
           populationById[d.iso_code] = 0;
           code = d.iso_code;
@@ -229,7 +240,7 @@ function ready(error, data, covid_map) {
           }
       });
 
- 
+
 
       data.features.forEach(d => { d.population = populationById[d.id] });
 

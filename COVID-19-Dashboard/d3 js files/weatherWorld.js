@@ -49,7 +49,7 @@ var color = d3.scaleThreshold()
     .attr('class', 'map')
     .append("g").attr('transform','translate(50,50)');
 
-  
+
     var projection = d3.geoMercator()
     .scale(0.03939*width + 0.104166*height+20)
     .translate( [width/2.3, height / 1.85]);
@@ -78,9 +78,9 @@ function ready(error, data, covid_map) {
 
   // console.log(covid_map)
 
-  const weatherById = {};     
+  const weatherById = {};
   const allDates = {};
-  covid_map.forEach(d => { 
+  covid_map.forEach(d => {
 
     weatherById[d.id] = +d[globalStart.toISOString().slice(0,10)]
      });
@@ -149,7 +149,7 @@ function ready(error, data, covid_map) {
     var margin2 = {top:0, right:50, bottom:50, left:50},
     width2 = width - margin2.left - margin2.right,
     height2 = height;
-    
+
     var x = d3.scaleTime()
     .domain([startDate, endDate])
     .range([margin2.right, width2])
@@ -183,7 +183,7 @@ function ready(error, data, covid_map) {
     .attr("text-anchor", "middle")
     .text(function(d) { return formatDate(d); });
 
-    var label = slider.append("text")  
+    var label = slider.append("text")
     .attr("class", "label")
     .attr("text-anchor", "middle")
     .text(formatTime(startDate))

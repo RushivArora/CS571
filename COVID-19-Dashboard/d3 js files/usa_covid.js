@@ -37,7 +37,7 @@ function usaMap(){
 
         var x = d3.scaleLinear()
             .domain([0, 18000])
-            .rangeRound([550, 900]);
+            .rangeRound([width-350, width]); //[550, 900]
 
         var color = d3.scaleThreshold()
             .domain(d3.range(0, 18000, 18000/9))
@@ -50,6 +50,15 @@ function usaMap(){
         var parseTime = d3.timeParse("%m-%d-%Y");
         var globalStart = new Date("2021-04-19");
         var check = 0;
+
+        svg.append("text")
+          .attr("x", (width / 2))
+          .attr("y", 45)
+          .attr("text-anchor", "middle")
+          .style("font-size", 30)
+          .style("font-weigth", "bold")
+          .style("text-decoration", "underline")
+          .text("USA Cases Map");
 
         var g = svg.append("g")
             .attr("class", "key")
@@ -96,12 +105,11 @@ function usaMap(){
           const nameById = {};
           const allDates = {};
 
-
-
           cases.forEach(d => {
             if(formatTime(parseTime(d.date)) == formatTime(globalStart)){
-              casesById[d.id] = d.rate;
-              nameById[d.id] = d.name;}
+                casesById[d.id] = d.rate;
+                nameById[d.id] = d.name;
+            }
           });
 
 
@@ -280,5 +288,8 @@ function usaMap(){
           }
 
         }
+
+        //svg.attr("transform", "scale(0.90)");
+
 
 }

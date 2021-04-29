@@ -38,7 +38,7 @@ function flightData(){
 
         var x = d3.scaleLinear()
             .domain([0, 18000])
-            .rangeRound([550, 900]);
+            .rangeRound([width-350, width]); //[550, 900]
 
         var scale_airport_rad = d3.scaleLinear()
             .domain([0,100])
@@ -56,6 +56,15 @@ function flightData(){
         var parseTime = d3.timeParse("%m-%d-%Y");
         var globalStart = new Date("2020-12-02");
         var check = 0;
+
+        svg.append("text")
+          .attr("x", (width / 2))
+          .attr("y", 45)
+          .attr("text-anchor", "middle")
+          .style("font-size", 30)
+          .style("font-weigth", "bold")
+          .style("text-decoration", "underline")
+          .text("USA Cases and Airports Map");
 
         var g = svg.append("g")
             .attr("class", "key")

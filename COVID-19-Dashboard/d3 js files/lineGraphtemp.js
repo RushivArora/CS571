@@ -39,6 +39,18 @@ queue()
 
 console.log(startDate)
 var check = 0;
+
+
+
+svg.append("text")
+  .attr("x", (width / 2))
+  .attr("y", 45)
+  .attr("text-anchor", "middle")
+  .style("font-size", 30)
+  .style("font-weigth", "bold")
+  .style("text-decoration", "underline")
+  .text("Cases by Country");
+
 var globalStart = new Date("2021-04-14");
 
 //Read the data
@@ -78,7 +90,7 @@ function ready(error, data){
 
   console.log(casesById);
 
-  //Step 4.1: Convert the dictionary to an array  
+  //Step 4.1: Convert the dictionary to an array
   var items = Object.keys(casesById).map(function(key) {
   return [key, casesById[key]];
   });
@@ -138,14 +150,14 @@ function ready(error, data){
         .attr("class", "x axis")
         .attr("transform", "translate(0," + height + ")")
         .call(xAxis);
-      
+
   //Create Y axis
   svg.append("g")
         .attr("class", "y axis")
         .call(yAxis);
 
   // Draw the line
-  
+
    var lines =  svg.selectAll(".line")
                    .data(sumstat2)
                    .enter().append("g")
@@ -177,7 +189,7 @@ function ready(error, data){
          })
           .attr("r", 6)
           .style("fill", function(d){
-           return color(d[0]); 
+           return color(d[0]);
          })
 
       var legendText = svg.selectAll("texting")
@@ -189,11 +201,11 @@ function ready(error, data){
         .attr("y", function(d,i){
          return 30 + i*15;
        })
-        .text(function(d){ 
+        .text(function(d){
           if(d[0] == "OWID_WRL"){
             return "WORLD"
           }
-          return d[0]; 
+          return d[0];
         })
         .style("font-size", "15px")
         .attr("alignment-baseline","middle")
@@ -211,7 +223,7 @@ function ready(error, data){
   var margin2 = {top:0, right:50, bottom:30, left:30},
     width2 = width - margin2.left - margin2.right,
     height2 = height - margin2.top - margin2.bottom + margin.top + margin.bottom;
-    
+
   var x_slider = d3.scaleTime()
                    .domain([startDate, endDate])
                    .range([0, width2])
@@ -246,7 +258,7 @@ function ready(error, data){
         .attr("text-anchor", "middle")
         .text(function(d) { return formatDate(d); });
 
-  var label = slider.append("text")  
+  var label = slider.append("text")
                     .attr("class", "label")
                     .attr("text-anchor", "middle")
                     .text(formatTime(globalStart))
@@ -329,7 +341,7 @@ function ready(error, data){
       }
     });
 
-    //Step 4.1: Convert the dictionary to an array  
+    //Step 4.1: Convert the dictionary to an array
     var items = Object.keys(casesById).map(function(key) {
         return [key, casesById[key]];
     });
@@ -401,7 +413,7 @@ function ready(error, data){
 
     legendCircle.data(topItems)
                 .enter()
-                
+
     d3.selectAll("circle.abc2")
       .each(function(d, i) {
         console.log(d)
@@ -411,7 +423,7 @@ function ready(error, data){
             d3.select(this).style(color(d[0]));
           })
       .transition()
-      .duration(2000)      
+      .duration(2000)
 
     d3.selectAll("text.abc")
       .each(function(d, i) {
@@ -434,4 +446,3 @@ function ready(error, data){
 
 
 }
-

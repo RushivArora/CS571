@@ -37,7 +37,7 @@ function weatherUSA1(){
 
         var x = d3.scaleLinear()
             .domain([0.2, 1.5])
-            .rangeRound([550, 900]);
+            .rangeRound([width-350, width-15]); //[550, 900]
 
         var color = d3.scaleThreshold()
             .domain(d3.range(0.2, 1.5, 1.5/7))
@@ -50,6 +50,15 @@ function weatherUSA1(){
         var parseTime = d3.timeParse("%m-%d-%Y");
         var globalStart = new Date("2019-01-24");
         var check = 0;
+
+        svg.append("text")
+          .attr("x", (width / 2))
+          .attr("y", 45)
+          .attr("text-anchor", "middle")
+          .style("font-size", 30)
+          .style("font-weigth", "bold")
+          .style("text-decoration", "underline")
+          .text("USA Weather Map");
 
         var g = svg.append("g")
             .attr("class", "key")

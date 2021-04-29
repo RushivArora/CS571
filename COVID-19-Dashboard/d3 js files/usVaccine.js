@@ -33,7 +33,7 @@ function usvaccine(){
 
         var x = d3.scaleLinear()
             .domain([0, 1])
-            .rangeRound([550, 900]);
+            .rangeRound([width-350, width]); //[550, 900]
 
         var color = d3.scaleThreshold()
             //.domain(d3.range(0, 1, 1/9))
@@ -47,6 +47,15 @@ function usvaccine(){
         var parseTime = d3.timeParse("%Y-%m-%d");
         var globalStart = new Date("2021-03-31");
         var check = 0;
+
+        svg.append("text")
+          .attr("x", (width / 2))
+          .attr("y", 45)
+          .attr("text-anchor", "middle")
+          .style("font-size", 30)
+          .style("font-weigth", "bold")
+          .style("text-decoration", "underline")
+          .text("USA Vaccines Map");
 
         var g = svg.append("g")
             .attr("class", "key")

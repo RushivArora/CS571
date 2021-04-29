@@ -54,6 +54,17 @@ queue()
 
 var check = 0;
 
+
+
+svg.append("text")
+  .attr("x", (width / 2))
+  .attr("y", 45)
+  .attr("text-anchor", "middle")
+  .style("font-size", 30)
+  .style("font-weigth", "bold")
+  .style("text-decoration", "underline")
+  .text("World Vaccine Map");
+
 function ready(error, data, covid_map) {
 
   // console.log(covid_map)
@@ -62,7 +73,7 @@ function ready(error, data, covid_map) {
   const vaccinationByIDPerHundred = {};
   const allDates = {};
 
-  covid_map.forEach(d => { 
+  covid_map.forEach(d => {
     var temp = new Date(d.date)
     if(d.new_vaccinations_smoothed != "" && temp > startDate && temp < globalStart){
       vaccinationByID[d.iso_code] += parseFloat(d.new_vaccinations_smoothed);
@@ -144,7 +155,7 @@ function ready(error, data, covid_map) {
     var margin2 = {top:0, right:50, bottom:50, left:50},
     width2 = width - margin2.left - margin2.right,
     height2 = height;
-    
+
     var x = d3.scaleTime()
     .domain([startDate, endDate])
     .range([0, width2])
@@ -178,7 +189,7 @@ function ready(error, data, covid_map) {
     .attr("text-anchor", "middle")
     .text(function(d) { return formatDate(d); });
 
-    var label = slider.append("text")  
+    var label = slider.append("text")
     .attr("class", "label")
     .attr("text-anchor", "middle")
     .text(formatTime(globalStart))
@@ -202,14 +213,14 @@ function ready(error, data, covid_map) {
       .text(formatTime(h));
 
       var code = "Hello"
-      covid_map.forEach(d => { 
+      covid_map.forEach(d => {
         if(code != d.iso_code){
           vaccinationByID[d.iso_code] = 0;
           code = d.iso_code;
           vaccinationByIDPerHundred[d.iso_code] = "0";
         }
 
-        
+
 
         var temp = new Date(d.date)
         if(d.new_vaccinations_smoothed != "" && temp > startDate && temp < globalStart){
