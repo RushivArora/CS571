@@ -142,7 +142,6 @@ function ready(error, data, covid_map) {
   const weatherById = {};
   const allDates = {};
   covid_map.forEach(d => {
-
     weatherById[d.id] = +d[globalStart.toISOString().slice(0,10)]
      });
   data.features.forEach(d => { d[globalStart.toISOString().slice(0,10)] = weatherById[d.properties.name] });
@@ -334,7 +333,7 @@ function ready(error, data, covid_map) {
 
       svg.selectAll("path")
          .style('fill', function(d){
-          return color(weatherById[d.properties.name])
+          return color(d[globalStart.toISOString().slice(0,10)] = weatherById[d.properties.name])
 
          })
     }

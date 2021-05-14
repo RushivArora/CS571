@@ -121,9 +121,9 @@ function worldRace(country){
                 }
             })
             .attr('x', width/12)
-            .attr('y', 0.05*height)
+            .attr('y', 0.04*height)
             .style('fill','white')
-            .style('font-size', 0.07*width + 'px');
+            .style('font-size', 0.04*width + 'px');
         
 
     });
